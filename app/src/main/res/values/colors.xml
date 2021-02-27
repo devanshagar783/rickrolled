@@ -9,4 +9,5 @@
     <color name = "white">#FFFFFFFF</color>
     <color name="rick_morty_green">#97CE4C</color>
     <color name="coral_orange">#FF8552</color>
+    <color name = "colorPurple">#983CFF</color>
 </resources>

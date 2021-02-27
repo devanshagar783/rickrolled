@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -17,8 +19,12 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        startActivity(new Intent(this, MainActivity.class));
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null)
+            startActivity(new Intent(this, SignupActivity.class));
+        else {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
         finish();
     }
 }

@@ -38,4 +38,8 @@
     </style>
     <style name="Theme.Rickrolled.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.Rickrolled.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
+    <style name = "Theme.OutLinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name = "color">@color/colorPurple</item>
+    </style>
 </resources>

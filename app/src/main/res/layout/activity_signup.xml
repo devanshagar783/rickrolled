@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    android:layout_width = "match_parent"
+    android:layout_height = "match_parent"
+    android:orientation = "vertical"
+    tools:context = ".SignupActivity"
+    >
+    
+    <com.google.android.material.textfield.TextInputLayout
+        android:id = "@+id/phonebox"
+        style = "@style/Theme.OutLinedBox"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:layout_marginStart = "32dp"
+        android:layout_marginTop = "190dp"
+        android:layout_marginEnd = "32dp"
+        android:hint = "Phone Number"
+        android:paddingBottom = "8dp"
+        app:counterEnabled = "true"
+        app:counterMaxLength = "13"
+        app:errorEnabled = "true"
+        app:helperText = "Enter number with country code(+91 for India)"
+        >
+        
+        <com.google.android.material.textfield.TextInputEditText
+            android:id = "@+id/phoneNumber"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:inputType = "phone"
+            />
+    
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <com.google.android.material.button.MaterialButton
+        android:id = "@+id/btngetotp"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:layout_marginStart = "32dp"
+        android:layout_marginEnd = "32dp"
+        android:text = "Get Verification Code"
+        android:textAllCaps = "false"
+        />
+    
+    <com.google.android.material.textfield.TextInputLayout
+        android:id = "@+id/otpbox"
+        style = "@style/Theme.OutLinedBox"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:layout_marginStart = "32dp"
+        android:layout_marginEnd = "32dp"
+        android:hint = "Enter Otp"
+        app:endIconMode = "password_toggle"
+        app:errorEnabled = "true"
+        >
+        
+        <com.google.android.material.textfield.TextInputEditText
+            android:id = "@+id/otp"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:inputType = "number"
+            />
+    
+    </com.google.android.material.textfield.TextInputLayout>
+    
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id = "@+id/btnResend"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_gravity = "end"
+        android:backgroundTint = "@color/purple_200"
+        android:contentDescription = "Resend"
+        android:src = "@drawable/resend"
+        />
+    
+    <com.google.android.material.button.MaterialButton
+        android:id = "@+id/btnVerify"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:layout_marginStart = "32dp"
+        android:layout_marginEnd = "32dp"
+        android:text = "Get Started"
+        android:textAllCaps = "false"
+        />
+
+</LinearLayout>
