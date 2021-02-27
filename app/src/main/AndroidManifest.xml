@@ -11,6 +11,8 @@
         android:roundIcon = "@mipmap/app_icon_round"
         android:supportsRtl = "true"
         android:theme = "@style/Theme.Rickrolled">
+        <activity android:name = ".AllCharactersActivity">
+        </activity>
         <activity android:name = ".SignupActivity">
         </activity>
         <activity
