@@ -8,4 +8,6 @@
     <string name = "str_next">Next</string>
     <string name = "next">Next</string>
     <string name = "prev">Prev</string>
+    <string name = "drawerclose">Close</string>
+    <string name = "draweropen">Open</string>
 </resources>
