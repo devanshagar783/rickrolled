@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private String CHAR_URL = "https://rickandmortyapi.com/api/character";
 
-    private TextView textView;
+    private ProgressBar bar;
 
     JSONObject jsonObject;
     JSONArray jsonArray;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.hometext);
+        bar = findViewById(R.id.progresshome);
         getjson();
     }
 
@@ -69,8 +70,24 @@ public class MainActivity extends AppCompatActivity {
                                         @Override
                                         public void onResponse(String response) {
                                             try {
-                                                JSONObject jsonObject = new JSONObject(response);
-                                                textView.setText(jsonObject.getString("name"));
+                                                JSONObject object = new JSONObject(response);
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("name", object.getString("name"));
+                                                bundle.putString("gender", object.getString("gender"));
+                                                bundle.putString("species", object.getString("species"));
+                                                bundle.putString("status", object.getString("status"));
+                                                bundle.putString("origin", object.getJSONObject("origin").getString("name"));
+                                                bundle.putString("location", object.getJSONObject("location").getString("name"));
+                                                bundle.putString("image", object.getString("image"));
+                                                InfoFragment fragment = new InfoFragment();
+                                                fragment.setArguments(bundle);
+                                                bar.setVisibility(View.GONE);
+
+                                                int count = getSupportFragmentManager().getBackStackEntryCount();
+                                                if (count != 0) {
+                                                    getSupportFragmentManager().popBackStack();
+                                                }
+                                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
