@@ -65,6 +65,10 @@
         android:layout_gravity = "start"
         app:headerLayout = "@layout/navigaion_header"
         app:menu = "@menu/drawer_menu"
-        />
+        >
+    
+        <include layout="@layout/navigaion_header"/>
+        
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

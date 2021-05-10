@@ -14,12 +14,14 @@
         app:layout_constraintEnd_toEndOf = "parent"
         app:layout_constraintStart_toStartOf = "parent"
         app:layout_constraintTop_toTopOf = "parent"
+        app:cardCornerRadius="20dp"
         >
         
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width = "match_parent"
             android:layout_height = "match_parent"
             android:background = "#444444"
+            android:padding="16dp"
             >
             
             <ImageView
@@ -45,33 +47,40 @@
                 android:textSize = "25sp"
                 android:textStyle = "bold"
                 app:layout_constraintStart_toEndOf = "@+id/charimage"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf = "parent"
                 />
             
-            <TextView
-                android:id = "@+id/chargender"
+            <LinearLayout
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
-                android:layout_marginTop = "5dp"
-                android:text = "@string/doctor_what"
-                android:textColor = "@color/coral_orange"
-                android:textSize = "18sp"
+                android:orientation="horizontal"
+                android:id="@+id/doa"
                 app:layout_constraintStart_toStartOf = "@+id/charname"
                 app:layout_constraintTop_toBottomOf = "@+id/charname"
-                />
-            
-            <TextView
-                android:id = "@+id/charstatus"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:layout_marginTop = "5dp"
-                android:text = "@string/doctor_what"
-                android:textColor = "@color/coral_orange"
-                android:textSize = "18sp"
-                app:layout_constraintStart_toStartOf = "@+id/chargender"
-                app:layout_constraintTop_toBottomOf = "@+id/chargender"
-                />
-            
+                app:layout_constraintEnd_toEndOf="@+id/charname">
+    
+                <TextView
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:text="DOA:"
+                    android:layout_marginTop = "5dp"
+                    android:textColor = "@color/coral_orange"
+                    android:textSize = "18sp"
+                    />
+    
+                <TextView
+                    android:id = "@+id/charstatus"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginTop = "5dp"
+                    android:text = "@string/doctor_what"
+                    android:textColor = "@color/coral_orange"
+                    android:textSize = "18sp"
+                    />
+                
+            </LinearLayout>
+    
             <TextView
                 android:id = "@+id/charspecies"
                 android:layout_width = "wrap_content"
@@ -82,8 +91,22 @@
                 android:text = "@string/doctor_what"
                 android:textColor = "@color/coral_orange"
                 android:textSize = "18sp"
-                app:layout_constraintStart_toStartOf = "@+id/charstatus"
-                app:layout_constraintTop_toBottomOf = "@+id/charstatus"
+                app:layout_constraintStart_toStartOf = "@+id/doa"
+                app:layout_constraintTop_toBottomOf = "@+id/doa"
+                app:layout_constraintEnd_toEndOf="@+id/doa"
+                />
+    
+            <TextView
+                android:id = "@+id/chargender"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginTop = "5dp"
+                android:text = "@string/doctor_what"
+                android:textColor = "@color/coral_orange"
+                android:textSize = "18sp"
+                app:layout_constraintStart_toStartOf = "@+id/charspecies"
+                app:layout_constraintTop_toBottomOf = "@+id/charspecies"
+                app:layout_constraintEnd_toEndOf="@+id/charspecies"
                 />
             
             <TextView
