@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 
 public class InfoFragment extends Fragment {
 
-    private TextView name, gender, species, status, origin, lastknown;
+    private TextView name, name2, gender, species, status, origin, location;
     private String img;
     private ImageView view;
     public InfoFragment() {
@@ -44,20 +44,16 @@ public class InfoFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragment_info, container, false);
 
         name=v.findViewById(R.id.charname);
+        name2=v.findViewById(R.id.charname2);
         gender=v.findViewById(R.id.chargender);
-        species=v.findViewById(R.id.charspecies);
-        status=v.findViewById(R.id.charstatus);
-        origin=v.findViewById(R.id.charorigin);
-        lastknown=v.findViewById(R.id.charlastknown);
+        location=v.findViewById(R.id.charlocation);
         img="";
         view=v.findViewById(R.id.charimage);
 
         name.setText(getArguments().getString("name"));
-        gender.setText(getArguments().getString("gender"));
-        species.setText(getArguments().getString("species"));
-        status.setText(getArguments().getString("status"));
-        origin.setText(getArguments().getString("origin"));
-        lastknown.setText(getArguments().getString("location"));
+        name2.setText(" " + getArguments().getString("name"));
+        gender.setText(" " + getArguments().getString("gender"));
+        location.setText(" " + getArguments().getString("location"));
 
         Glide.with(getActivity().getApplicationContext())
                 .asBitmap()
