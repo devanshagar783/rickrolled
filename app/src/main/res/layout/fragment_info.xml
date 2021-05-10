@@ -31,7 +31,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "21dp"
-            android:text = "Rick Sanchez"
+            android:text = "Name"
             android:textSize = "20sp"
             app:layout_constraintTop_toBottomOf="@id/charimage"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,85 +39,41 @@
             />
 
         <TextView
-            android:id = "@+id/charnamepretext"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:layout_marginTop = "30dp"
-            android:text = "@string/charname_pretext"
-            android:textSize = "18sp"
-            app:layout_constraintTop_toBottomOf="@id/charname"
-            app:layout_constraintStart_toStartOf="parent"
-            />
-
-        <TextView
             android:id = "@+id/charname2"
-            android:layout_width = "wrap_content"
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "30dp"
-            android:text = "name"
+            android:text = "@string/charname"
             android:textSize = "18sp"
             app:layout_constraintTop_toBottomOf="@id/charname"
-            app:layout_constraintStart_toEndOf="@id/charnamepretext"
-            />
-
-        <TextView
-            android:id = "@+id/chargenderpretext"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:layout_marginTop = "8dp"
-            android:text = "@string/chargender_pretext"
-            android:textSize = "18sp"
-            app:layout_constraintTop_toBottomOf="@id/charname2"
             app:layout_constraintStart_toStartOf="parent"
             />
 
         <TextView
             android:id = "@+id/chargender"
-            android:layout_width = "wrap_content"
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "8dp"
-            android:text = "gender"
+            android:text = "@string/chargender"
             android:textSize = "18sp"
             app:layout_constraintTop_toBottomOf="@id/charname2"
-            app:layout_constraintStart_toEndOf="@id/chargenderpretext"
+            app:layout_constraintStart_toStartOf="parent"
             />
         
         <TextView
-            android:id = "@+id/charlocationpretext"
-            android:layout_width = "wrap_content"
+            android:id = "@+id/charlocation"
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "8dp"
-            android:text = "@string/charlocation_pretext"
+            android:maxLines="2"
+            android:text = "@string/charlocation"
             android:textSize = "18sp"
             app:layout_constraintTop_toBottomOf="@id/chargender"
             app:layout_constraintStart_toStartOf="parent"
             />
 
-        <TextView
-            android:id = "@+id/charlocation"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:layout_marginTop = "8dp"
-            android:maxLines="2"
-            android:text = "location"
-            android:textSize = "18sp"
-            app:layout_constraintTop_toBottomOf="@id/chargender"
-            app:layout_constraintStart_toEndOf="@id/charlocationpretext"
-            />
-
-        <TextView
-            android:id = "@+id/charlocationposttext"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:layout_marginTop = "8dp"
-            android:maxLines="2"
-            android:text = "@string/charlocation_posttext"
-            android:textSize = "18sp"
-            app:layout_constraintTop_toBottomOf="@id/chargender"
-            app:layout_constraintStart_toEndOf="@id/charlocation"
-            />
-
         <Button
+            android:id="@+id/rickroll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="¯\\_(ツ)_/¯"
