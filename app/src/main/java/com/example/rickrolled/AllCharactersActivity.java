@@ -82,7 +82,7 @@ public class AllCharactersActivity extends AppCompatActivity {
                             Log.d(TAG, "onResponse: " + e.getMessage());
                         } finally {
                             charView = findViewById(R.id.charView);
-                            RVAdapter rva = new RVAdapter(getApplicationContext(), jsonArray);
+                            RVAdapter rva = new RVAdapter(AllCharactersActivity.this, jsonArray);
                             charView.setAdapter(rva);
                             charView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                             progressIndicator.setVisibility(View.GONE);
