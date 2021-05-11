@@ -1,16 +1,19 @@
 <resources>
-    <string name = "app_name">Rick Rolled</string>
-    <string name = "last_seen">Last seen:</string>
-    <string name = "doctor_what">Doctor what</string>
-    <string name = "first_seen">First seen:</string>
-    <string name = "doctor_who">Doctor who</string>
-    <string name = "rick_roll_me">Rick roll me</string>
-    <string name = "str_next">Next</string>
-    <string name = "next">Next</string>
-    <string name = "prev">Prev</string>
-    <string name = "drawerclose">Close</string>
-    <string name = "draweropen">Open</string>
+    <string name="app_name">Rick Rolled</string>
+    <string name="last_seen">Last seen:</string>
+    <string name="doctor_what">Doctor what</string>
+    <string name="first_seen">First seen:</string>
+    <string name="doctor_who">Doctor who</string>
+    <string name="rick_roll_me">Rick roll me</string>
+    <string name="str_next">Next</string>
+    <string name="next">Next</string>
+    <string name="prev">Prev</string>
+    <string name="drawerclose">Close</string>
+    <string name="draweropen">Open</string>
     <string name="charname">What up? I am %1$s.</string>
     <string name="chargender">I am a %1$s.</string>
     <string name="charlocation">If you’re ever in %1$s, hit me up! ;)</string>
+    <string name="locationname">Name: %1$s</string>
+    <string name="locationtype">Type: %1$s</string>
+    <string name="locationdimension">Dimension: %1$s</string>
 </resources>
