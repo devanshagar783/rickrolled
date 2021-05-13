@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private Fragment fragment;
 
     JSONObject jsonObject;
     JSONArray jsonArray;
@@ -103,15 +105,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                                 bundle.putString("origin", object.getJSONObject("origin").getString("name"));
                                                 bundle.putString("location", object.getJSONObject("location").getString("name"));
                                                 bundle.putString("image", object.getString("image"));
-                                                InfoFragment fragment = new InfoFragment();
+                                                fragment = new InfoFragment();
                                                 fragment.setArguments(bundle);
                                                 bar.setVisibility(View.GONE);
 
                                                 int count = getSupportFragmentManager().getBackStackEntryCount();
-                                                if (count != 0) {
-                                                    getSupportFragmentManager().popBackStack();
-                                                }
-                                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
+//                                                if (count != 0) {
+//                                                    getSupportFragmentManager().popBackStack();
+//                                                }
+                                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("Home Fragment").commit();
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -142,20 +144,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         requestQueue.add(stringRequest);
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, EndSplash.class));
-        finish();
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            startActivity(new Intent(this, EndSplash.class));
+            finish();
+        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.all_characters:
-                startActivity(new Intent(getApplicationContext(), AllCharactersActivity.class));
+        switch (item.getItemId()) {
+            case R.id.all_characters: {
+                fragment = new AllCharactersFragment();
+            }
         }
-        return false;
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("All Character Fragment").commit();
+        drawerLayout.closeDrawers();
+        return true;
     }
 }
