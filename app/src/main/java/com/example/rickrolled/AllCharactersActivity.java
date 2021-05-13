@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -81,8 +82,9 @@ public class AllCharactersActivity extends AppCompatActivity {
                             e.printStackTrace();
                             Log.d(TAG, "onResponse: " + e.getMessage());
                         } finally {
+                            Resources res = getResources();
                             charView = findViewById(R.id.charView);
-                            RVAdapter rva = new RVAdapter(AllCharactersActivity.this, jsonArray);
+                            RVAdapter rva = new RVAdapter(AllCharactersActivity.this, jsonArray, res.getString(R.string.allCharacters));
                             charView.setAdapter(rva);
                             charView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                             progressIndicator.setVisibility(View.GONE);

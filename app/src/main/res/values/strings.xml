@@ -16,5 +16,9 @@
     <string name="locationname">Name: %1$s</string>
     <string name="locationtype">Type: %1$s</string>
     <string name="locationdimension">Dimension: %1$s</string>
-    <string name = "chardoa">I am %1$s!!</string>
+    <string name="chardoa">I am %1$s!!</string>
+    <string name="allCharacters">ALL_CHARACTERS</string>
+    <string name="allLocations">ALL_LOCATIONS</string>
+    <string name="allEpisodes">ALL_EPISODES</string>
+    <string name="charSpecies_placeholder">%1$s: %2$s</string>
 </resources>
