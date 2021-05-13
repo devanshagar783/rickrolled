@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private Fragment fragment;
 
     JSONObject jsonObject;
     JSONArray jsonArray;
@@ -80,54 +82,57 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void getjson() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, CHAR_URL,
-                response -> {
-                    try {
-                        jsonObject = new JSONObject(response);
-                        count = Integer.parseInt(jsonObject.getJSONObject("info").getString("count"));
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            jsonObject = new JSONObject(response);
+                            count = Integer.parseInt(jsonObject.getJSONObject("info").getString("count"));
 
-                        Random rand = new Random();
-                        random = rand.nextInt(count);
-                        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, CHAR_URL + "/" + String.valueOf(random),
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONObject object = new JSONObject(response);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("name", object.getString("name"));
-                                            bundle.putString("gender", object.getString("gender"));
-                                            bundle.putString("species", object.getString("species"));
-                                            bundle.putString("status", object.getString("status"));
-                                            bundle.putString("origin", object.getJSONObject("origin").getString("name"));
-                                            bundle.putString("location", object.getJSONObject("location").getString("name"));
-                                            bundle.putString("image", object.getString("image"));
-                                            InfoFragment fragment = new InfoFragment();
-                                            fragment.setArguments(bundle);
-                                            bar.setVisibility(View.GONE);
+                            Random rand = new Random();
+                            random = rand.nextInt(count);
+                            StringRequest stringRequest = new StringRequest(Request.Method.GET, CHAR_URL + "/" + String.valueOf(random),
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject object = new JSONObject(response);
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("name", object.getString("name"));
+                                                bundle.putString("gender", object.getString("gender"));
+                                                bundle.putString("species", object.getString("species"));
+                                                bundle.putString("status", object.getString("status"));
+                                                bundle.putString("origin", object.getJSONObject("origin").getString("name"));
+                                                bundle.putString("location", object.getJSONObject("location").getString("name"));
+                                                bundle.putString("image", object.getString("image"));
+                                                fragment = new InfoFragment();
+                                                fragment.setArguments(bundle);
+                                                bar.setVisibility(View.GONE);
 
-                                            int count = getSupportFragmentManager().getBackStackEntryCount();
-                                            if (count != 0) {
-                                                getSupportFragmentManager().popBackStack();
+                                                int count = getSupportFragmentManager().getBackStackEntryCount();
+//                                                if (count != 0) {
+//                                                    getSupportFragmentManager().popBackStack();
+//                                                }
+                                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("Home Fragment").commit();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
                                             }
-                                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
                                         }
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
 
-                                    }
-                                });
-                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                        queue.add(stringRequest1);
+                                        }
+                                    });
+                            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                            queue.add(stringRequest);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Log.d(TAG, "onResponse: " + e.getMessage());
-                    } finally {
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "onResponse: " + e.getMessage());
+                        } finally {
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -139,20 +144,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         requestQueue.add(stringRequest);
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, EndSplash.class));
-        finish();
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            startActivity(new Intent(this, EndSplash.class));
+            finish();
+        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.all_characters:
-                startActivity(new Intent(getApplicationContext(), AllCharactersActivity.class));
+        switch (item.getItemId()) {
+            case R.id.all_characters: {
+                fragment = new AllCharactersFragment();
+            }
         }
-        return false;
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("All Character Fragment").commit();
+        drawerLayout.closeDrawers();
+        return true;
     }
 }

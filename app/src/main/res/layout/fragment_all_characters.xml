@@ -9,66 +9,33 @@
     tools:context = ".MainActivity"
     >
     
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id = "@+id/coordinator"
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id = "@+id/progressbar"
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
+        android:indeterminate = "true"
+        android:visibility = "gone"
         app:layout_constraintEnd_toEndOf = "parent"
         app:layout_constraintStart_toStartOf = "parent"
         app:layout_constraintTop_toTopOf = "parent"
-        >
-        
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:theme = "@style/Theme.AppCompat.DayNight"
-            >
-            
-            <androidx.appcompat.widget.Toolbar
-                android:id = "@+id/hometoolbar"
-                android:layout_width = "match_parent"
-                android:layout_height = "?attr/actionBarSize"
-                app:title = "Rick Rolled"
-                />
-        
-        </com.google.android.material.appbar.AppBarLayout>
-        
-        <FrameLayout
-            android:layout_width = "match_parent"
-            android:layout_height = "match_parent"
-            android:id="@+id/fragment"/>
-    
-    
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    
+        />
     
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id = "@+id/lay1"
-        
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
         android:paddingBottom = "120dp"
         app:layout_constraintEnd_toEndOf = "parent"
         app:layout_constraintStart_toStartOf = "parent"
-        app:layout_constraintTop_toBottomOf = "@+id/coordinator"
+        app:layout_constraintTop_toBottomOf = "@+id/progressbar"
         >
-        
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id = "@+id/progressbar"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:indeterminate = "true"
-            android:visibility = "gone"
-            app:layout_constraintEnd_toEndOf = "parent"
-            app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toTopOf = "parent"
-            />
         
         <androidx.recyclerview.widget.RecyclerView
             android:id = "@+id/charView"
             android:layout_width = "match_parent"
             android:layout_height = "match_parent"
             />
+        
     </androidx.constraintlayout.widget.ConstraintLayout>
     
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,8 +52,9 @@
             android:layout_width = "1000dp"
             android:layout_height = "65dp"
             android:elevation = "2dp"
-            android:scaleType="fitXY"
-            tools:ignore="MissingConstraints" />
+            android:scaleType = "fitXY"
+            tools:ignore = "MissingConstraints"
+            />
         
         <Button
             android:id = "@+id/rick_roll"
@@ -122,6 +90,7 @@
             app:layout_constraintEnd_toStartOf = "@+id/rick_roll"
             app:layout_constraintStart_toStartOf = "parent"
             />
+        
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

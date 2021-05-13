@@ -1,18 +1,22 @@
 package com.example.rickrolled;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -26,34 +30,43 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+public class AllCharactersFragment extends Fragment {
 
-public class AllCharactersActivity extends AppCompatActivity {
+    private static final String TAG = "AllCharactersFragment";
+    View v;
 
-    private Toolbar toolbar;
     RecyclerView charView;
     JSONObject jsonObject;
     JSONArray jsonArray;
     Button button, buttonnext, buttonprev, btn;
     ImageView sparkyHome;
     LinearProgressIndicator progressIndicator;
-    private static final String TAG = "MainActivity";
     private String CHAR_URL = "https://rickandmortyapi.com/api/character";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_characters);
-        toolbar = findViewById(R.id.hometoolbar);
-        setSupportActionBar(toolbar);
+    public AllCharactersFragment() {
+        // Required empty public constructor
+    }
 
-        button = findViewById(R.id.rick_roll);
-        buttonnext = findViewById(R.id.next);
-        buttonprev = findViewById(R.id.prev);
-        sparkyHome = findViewById(R.id.sparkyhome);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        v = inflater.inflate(R.layout.fragment_all_characters, container, false);
+        button = v.findViewById(R.id.rick_roll);
+        buttonnext = v.findViewById(R.id.next);
+        buttonprev = v.findViewById(R.id.prev);
+        sparkyHome = v.findViewById(R.id.sparkyhome);
 
         Glide.with(this)
                 .asGif()
@@ -63,11 +76,12 @@ public class AllCharactersActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), RickrollMe.class));
+                startActivity(new Intent(getContext(), RickrollMe.class));
             }
         });
-        progressIndicator = findViewById(R.id.progressbar);
+        progressIndicator = v.findViewById(R.id.progressbar);
         getjson();
+        return v;
     }
 
     public void getjson() {
@@ -83,10 +97,10 @@ public class AllCharactersActivity extends AppCompatActivity {
                             Log.d(TAG, "onResponse: " + e.getMessage());
                         } finally {
                             Resources res = getResources();
-                            charView = findViewById(R.id.charView);
-                            RVAdapter rva = new RVAdapter(AllCharactersActivity.this, jsonArray, res.getString(R.string.allCharacters));
+                            charView = v.findViewById(R.id.charView);
+                            RVAdapter rva = new RVAdapter(getContext(), jsonArray, res.getString(R.string.allCharacters));
                             charView.setAdapter(rva);
-                            charView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            charView.setLayoutManager(new LinearLayoutManager(getContext()));
                             progressIndicator.setVisibility(View.GONE);
                             buttonnext.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -97,7 +111,7 @@ public class AllCharactersActivity extends AppCompatActivity {
                                         if (CHAR_URL != null)
                                             getjson();
                                         else
-                                            Toast.makeText(AllCharactersActivity.this, "Doesn't exist", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "Doesn't exist", Toast.LENGTH_SHORT).show();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -113,7 +127,7 @@ public class AllCharactersActivity extends AppCompatActivity {
                                         if (!CHAR_URL.equals("null")) {
                                             getjson();
                                         } else {
-                                            Toast.makeText(AllCharactersActivity.this, "Doesn't exist", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "Doesn't exist", Toast.LENGTH_SHORT).show();
                                             progressIndicator.setVisibility(View.GONE);
                                         }
                                     } catch (JSONException e) {
@@ -129,28 +143,15 @@ public class AllCharactersActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                     }
                 });
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.home_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.family_tree) {
-            startActivity(new Intent(getApplicationContext(), TreeActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.home_menu, menu);
+        //TODO - action bar not working
+        Log.d(TAG, "onCreateOptionsMenu: " + menu);
     }
 }

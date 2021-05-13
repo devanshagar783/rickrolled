@@ -89,6 +89,9 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 e.printStackTrace();
                             } finally {
                                 fragment.setArguments(bundle);
+//                                int count = ((FragmentActivity) context).getSupportFragmentManager().getBackStackEntryCount();
+//                                if(count>0)
+//                                    ((FragmentActivity)context).getSupportFragmentManager().popBackStack();
                                 ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
                             }
                         }
