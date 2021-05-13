@@ -156,9 +156,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.all_characters: {
+            case R.id.all_characters:
                 fragment = new AllCharactersFragment();
-            }
+                break;
+
+            case R.id.all_locations:
+                fragment = new AllLocationsFragment();
+                break;
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("All Character Fragment").commit();

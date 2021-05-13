@@ -21,14 +21,14 @@ import org.json.JSONObject;
 
 public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    JSONArray characters;
+    JSONArray data;
     Context context;
     String adapterType;
     private static final String TAG = "RVAdapter";
 
-    public RVAdapter(Context context, JSONArray characters, String adapterType) {
+    public RVAdapter(Context context, JSONArray data, String adapterType) {
         this.context = context;
-        this.characters = characters;
+        this.data = data;
         this.adapterType = adapterType;
     }
 
@@ -41,7 +41,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 View view1 = inflater.inflate(R.layout.char_view, parent, false);
                 return new AllCharactersHolder(view1);
             case "ALL_LOCATIONS":
-                View view2 = inflater.inflate(R.layout.char_view, parent, false);
+                View view2 = inflater.inflate(R.layout.all_location_card, parent, false);
                 return new AllLocationsHolder(view2);
             case "ALL_EPISODES":
                 View view3 = inflater.inflate(R.layout.char_view, parent, false);
@@ -58,7 +58,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case "ALL_CHARACTERS":
                 AllCharactersHolder ACH = (AllCharactersHolder) holder;
                 try {
-                    JSONObject charsIndi = characters.getJSONObject(position);
+                    JSONObject charsIndi = data.getJSONObject(position);
                     ACH.charname.setText(charsIndi.getString("name"));
                     ACH.chargender.setText(charsIndi.getString("gender"));
                     ACH.charstatus.setText(charsIndi.getString("status"));
@@ -89,9 +89,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 e.printStackTrace();
                             } finally {
                                 fragment.setArguments(bundle);
-//                                int count = ((FragmentActivity) context).getSupportFragmentManager().getBackStackEntryCount();
-//                                if(count>0)
-//                                    ((FragmentActivity)context).getSupportFragmentManager().popBackStack();
                                 ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
                             }
                         }
@@ -102,14 +99,34 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 break;
 
-//            case "ALL_LOCATIONS":
-//                AllLocationsHolder ALH = (AllLocationsHolder) holder;
-//                try {
-//                        //Logic
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                break;
+            case "ALL_LOCATIONS":
+                AllLocationsHolder ALH = (AllLocationsHolder) holder;
+                try {
+                    JSONObject locIndi = data.getJSONObject(position);
+                    ALH.planetName.setText(locIndi.getString("name"));
+
+                    ALH.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            LocationInfo fragment = new LocationInfo();
+                            Bundle bundle = new Bundle();
+                            try {
+                                bundle.putString("name", locIndi.getString("name"));
+                                bundle.putString("type", locIndi.getString("type"));
+                                bundle.putString("dimension", locIndi.getString("dimension"));
+                                bundle.putString("status", locIndi.getJSONArray("residents").toString());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } finally {
+                                fragment.setArguments(bundle);
+                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
+                            }
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
 //
 //            case "ALL_EPISODES":
 //                AllEpisodesHolder AEH = (AllEpisodesHolder) holder;
@@ -124,7 +141,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return characters.length();
+        return data.length();
     }
 
     public static class AllCharactersHolder extends RecyclerView.ViewHolder {
@@ -145,13 +162,13 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class AllLocationsHolder extends RecyclerView.ViewHolder {
-        //fields
+        TextView planetName;
         public AllLocationsHolder(@NonNull View itemView) {
             super(itemView);
-            //initialize values
+            planetName = itemView.findViewById(R.id.planetName);
         }
-    }
 
+    }
     public static class AllEpisodesHolder extends RecyclerView.ViewHolder {
         //fields
         public AllEpisodesHolder(@NonNull View itemView) {

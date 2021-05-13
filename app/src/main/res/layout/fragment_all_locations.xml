@@ -6,39 +6,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AllLocationsFragment">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id = "@+id/coordinator"
-        android:layout_width = "match_parent"
-        android:layout_height = "match_parent"
-        >
+<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--        android:id = "@+id/coordinator"-->
+<!--        android:layout_width = "match_parent"-->
+<!--        android:layout_height = "match_parent"-->
+<!--        >-->
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:theme = "@style/Theme.AppCompat.DayNight"
-        >
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width = "match_parent"-->
+<!--        android:layout_height = "wrap_content"-->
+<!--        android:theme = "@style/Theme.AppCompat.DayNight"-->
+<!--        >-->
 
-        <androidx.appcompat.widget.Toolbar
-            android:id = "@+id/hometoolbar"
-            android:layout_width = "match_parent"
-            android:layout_height = "?attr/actionBarSize"
-            app:title = "Rick Rolled"
-            />
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id = "@+id/hometoolbar"-->
+<!--            android:layout_width = "match_parent"-->
+<!--            android:layout_height = "?attr/actionBarSize"-->
+<!--            app:title = "Locations"-->
+<!--            />-->
 
-    </com.google.android.material.appbar.AppBarLayout>
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize">
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="?attr/actionBarSize">-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/locationsRV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
 </FrameLayout>
