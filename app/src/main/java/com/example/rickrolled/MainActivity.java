@@ -108,26 +108,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                                 fragment = new InfoFragment();
                                                 fragment.setArguments(bundle);
                                                 bar.setVisibility(View.GONE);
-
-                                                int count = getSupportFragmentManager().getBackStackEntryCount();
-//                                                if (count != 0) {
-//                                                    getSupportFragmentManager().popBackStack();
-//                                                }
                                                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("Home Fragment").commit();
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
                                         }
                                     },
-                                    new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-
-                                        }
+                                    error -> {
                                     });
                             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                             queue.add(stringRequest);
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d(TAG, "onResponse: " + e.getMessage());
@@ -135,10 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
+                error -> {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
@@ -162,6 +149,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.all_locations:
                 fragment = new AllLocationsFragment();
+                break;
+
+            case R.id.family:
+                fragment = new FamilyTreeFragment();
                 break;
         }
 

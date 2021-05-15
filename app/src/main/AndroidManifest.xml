@@ -11,12 +11,10 @@
         android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Rickrolled">
-        <activity android:name=".AllCharactersActivity"></activity>
         <activity android:name=".SignupActivity"></activity>
         <activity
             android:name=".RickrollMe"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".TreeActivity" />
         <activity
             android:name=".EndSplash"
             android:theme="@style/EndSplash" />
