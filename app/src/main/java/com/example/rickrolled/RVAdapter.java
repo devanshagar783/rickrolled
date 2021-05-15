@@ -3,6 +3,7 @@ package com.example.rickrolled;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,27 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     JSONArray data;
     Context context;
     String adapterType;
+    JSONObject charsIndi;
+    String imgURL;
+
+
     private static final String TAG = "RVAdapter";
 
     public RVAdapter(Context context, JSONArray data, String adapterType) {
@@ -46,6 +57,9 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case "ALL_EPISODES":
                 View view3 = inflater.inflate(R.layout.char_view, parent, false);
                 return new AllEpisodesHolder(view3);
+            case "ALL_RESIDENTS":
+                View view4 = inflater.inflate(R.layout.residents_rv_card, parent, false);
+                return new AllResidentsHolder(view4);
             default:
                 return null;
         }
@@ -72,25 +86,22 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .load(imgURL)
                             .into(ACH.charimage);
 
-                    ACH.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            CharacterFragment fragment = new CharacterFragment();
-                            Bundle bundle = new Bundle();
-                            try {
-                                bundle.putString("name", charsIndi.getString("name"));
-                                bundle.putString("gender", charsIndi.getString("gender"));
-                                bundle.putString("species", charsIndi.getString("species"));
-                                bundle.putString("status", charsIndi.getString("status"));
-                                bundle.putString("origin", charsIndi.getJSONObject("origin").getString("name"));
-                                bundle.putString("location", charsIndi.getJSONObject("location").getString("name"));
-                                bundle.putString("image", charsIndi.getString("image"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } finally {
-                                fragment.setArguments(bundle);
-                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
-                            }
+                    ACH.itemView.setOnClickListener(view -> {
+                        CharacterFragment fragment = new CharacterFragment();
+                        Bundle bundle = new Bundle();
+                        try {
+                            bundle.putString("name", charsIndi.getString("name"));
+                            bundle.putString("gender", charsIndi.getString("gender"));
+                            bundle.putString("species", charsIndi.getString("species"));
+                            bundle.putString("status", charsIndi.getString("status"));
+                            bundle.putString("origin", charsIndi.getJSONObject("origin").getString("name"));
+                            bundle.putString("location", charsIndi.getJSONObject("location").getString("name"));
+                            bundle.putString("image", charsIndi.getString("image"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } finally {
+                            fragment.setArguments(bundle);
+                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
                         }
                     });
 
@@ -105,28 +116,74 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     JSONObject locIndi = data.getJSONObject(position);
                     ALH.planetName.setText(locIndi.getString("name"));
 
-                    ALH.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            LocationInfo fragment = new LocationInfo();
-                            Bundle bundle = new Bundle();
-                            try {
-                                bundle.putString("name", locIndi.getString("name"));
-                                bundle.putString("type", locIndi.getString("type"));
-                                bundle.putString("dimension", locIndi.getString("dimension"));
-                                bundle.putString("status", locIndi.getJSONArray("residents").toString());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            } finally {
-                                fragment.setArguments(bundle);
-                                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
-                            }
+                    ALH.itemView.setOnClickListener(view -> {
+                        LocationInfo fragment = new LocationInfo();
+                        Bundle bundle = new Bundle();
+                        try {
+                            bundle.putString("name", locIndi.getString("name"));
+                            bundle.putString("type", locIndi.getString("type"));
+                            bundle.putString("dimension", locIndi.getString("dimension"));
+                            bundle.putString("residents", locIndi.getJSONArray("residents").toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } finally {
+                            fragment.setArguments(bundle);
+                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
                         }
                     });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
+
+            case "ALL_RESIDENTS":
+                AllResidentsHolder ARH = (AllResidentsHolder) holder;
+                try {
+                    String residentURL = data.getString(position);
+//                    Log.d(TAG, "onBindViewHolder: " + residentURL);
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, residentURL,
+                            response -> {
+                                try {
+                                    charsIndi = new JSONObject(response);
+                                    imgURL = charsIndi.getString("image");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.d(TAG, "onResponse: " + e.getMessage());
+                                } finally {
+                                    Glide.with(context)
+                                            .asBitmap()
+                                            .load(imgURL)
+                                            .into(ARH.residentImage);
+                                }
+                            },
+                            error -> {
+                            });
+                    RequestQueue requestQueue = Volley.newRequestQueue(context);
+                    requestQueue.add(stringRequest);
+
+                    ARH.itemView.setOnClickListener(view -> {
+                        CharacterFragment fragment = new CharacterFragment();
+                        Bundle bundle = new Bundle();
+                        try {
+                            bundle.putString("name", charsIndi.getString("name"));
+                            bundle.putString("gender", charsIndi.getString("gender"));
+                            bundle.putString("species", charsIndi.getString("species"));
+                            bundle.putString("status", charsIndi.getString("status"));
+                            bundle.putString("origin", charsIndi.getJSONObject("origin").getString("name"));
+                            bundle.putString("location", charsIndi.getJSONObject("location").getString("name"));
+                            bundle.putString("image", charsIndi.getString("image"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } finally {
+                            fragment.setArguments(bundle);
+                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+
 //
 //            case "ALL_EPISODES":
 //                AllEpisodesHolder AEH = (AllEpisodesHolder) holder;
@@ -163,12 +220,23 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static class AllLocationsHolder extends RecyclerView.ViewHolder {
         TextView planetName;
+
         public AllLocationsHolder(@NonNull View itemView) {
             super(itemView);
             planetName = itemView.findViewById(R.id.planetName);
         }
-
     }
+
+    public static class AllResidentsHolder extends RecyclerView.ViewHolder {
+        //        TextView residentName;
+        ImageView residentImage;
+
+        public AllResidentsHolder(@NonNull View itemView) {
+            super(itemView);
+            residentImage = itemView.findViewById(R.id.residentImage);
+        }
+    }
+
     public static class AllEpisodesHolder extends RecyclerView.ViewHolder {
         //fields
         public AllEpisodesHolder(@NonNull View itemView) {
