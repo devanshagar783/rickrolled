@@ -43,7 +43,7 @@ public class AllCharactersFragment extends Fragment {
     RecyclerView charView;
     JSONObject jsonObject;
     JSONArray jsonArray;
-    Button button, buttonnext, buttonprev, btn;
+    Button button, buttonnext, buttonprev;
     ImageView sparkyHome;
     LinearProgressIndicator progressIndicator;
     private String CHAR_URL = "https://rickandmortyapi.com/api/character";
@@ -138,10 +138,7 @@ public class AllCharactersFragment extends Fragment {
                         }
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
+                error -> {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
