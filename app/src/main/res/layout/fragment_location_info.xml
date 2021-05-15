@@ -12,26 +12,15 @@
         android:layout_margin = "16dp"
         >
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id = "@+id/locationimage"
-            android:layout_width = "200dp"
-            android:layout_height = "200dp"
-            android:layout_marginTop="30dp"
-            android:scaleType = "centerCrop"
-            android:src = "@drawable/rickimage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
 
         <TextView
             android:id = "@+id/locationname"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:layout_marginTop = "30dp"
-            android:text = "@string/charname"
+            android:layout_marginTop = "80dp"
+            android:text = "@string/locationname"
             android:textSize = "18sp"
-            app:layout_constraintTop_toBottomOf="@id/locationimage"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
@@ -41,7 +30,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "8dp"
-            android:text = "@string/chargender"
+            android:text ="@string/locationtype"
             android:textSize = "18sp"
             app:layout_constraintTop_toBottomOf="@id/locationname"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +43,7 @@
             android:layout_height = "wrap_content"
             android:layout_marginTop = "8dp"
             android:maxLines="2"
-            android:text = "@string/charlocation"
+            android:text = "@string/locationdimension"
             android:textSize = "18sp"
             app:layout_constraintTop_toBottomOf="@id/locationtype"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +65,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/residentsRV"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="400dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

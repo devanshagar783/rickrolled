@@ -83,56 +83,53 @@ public class AllCharactersFragment extends Fragment {
 
     public void getjson() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, CHAR_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            jsonObject = new JSONObject(response);
-                            jsonArray = jsonObject.getJSONArray("results");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.d(TAG, "onResponse: " + e.getMessage());
-                        } finally {
-                            Resources res = getResources();
-                            charView = v.findViewById(R.id.charView);
-                            RVAdapter rva = new RVAdapter(getContext(), jsonArray, res.getString(R.string.allCharacters));
-                            charView.setAdapter(rva);
-                            charView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            progressIndicator.setVisibility(View.GONE);
-                            buttonnext.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    try {
-                                        progressIndicator.setVisibility(View.VISIBLE);
-                                        CHAR_URL = jsonObject.getJSONObject("info").getString("next");
-                                        if (CHAR_URL != null)
-                                            getjson();
-                                        else
-                                            Toast.makeText(getContext(), "Doesn't exist", Toast.LENGTH_SHORT).show();
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                response -> {
+                    try {
+                        jsonObject = new JSONObject(response);
+                        jsonArray = jsonObject.getJSONArray("results");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.d(TAG, "onResponse: " + e.getMessage());
+                    } finally {
+                        Resources res = getResources();
+                        charView = v.findViewById(R.id.charView);
+                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, res.getString(R.string.allCharacters));
+                        charView.setAdapter(rva);
+                        charView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        progressIndicator.setVisibility(View.GONE);
+                        buttonnext.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    progressIndicator.setVisibility(View.VISIBLE);
+                                    CHAR_URL = jsonObject.getJSONObject("info").getString("next");
+                                    if (CHAR_URL != null)
+                                        getjson();
+                                    else
+                                        Toast.makeText(getContext(), "Doesn't exist", Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            });
-                            buttonprev.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    try {
-                                        progressIndicator.setVisibility(View.VISIBLE);
-                                        CHAR_URL = jsonObject.getJSONObject("info").getString("prev");
-                                        Log.d(TAG, "onClick: 123" + CHAR_URL);
-                                        if (!CHAR_URL.equals("null")) {
-                                            getjson();
-                                        } else {
-                                            Toast.makeText(getContext(), "Doesn't exist", Toast.LENGTH_SHORT).show();
-                                            progressIndicator.setVisibility(View.GONE);
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                            }
+                        });
+                        buttonprev.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    progressIndicator.setVisibility(View.VISIBLE);
+                                    CHAR_URL = jsonObject.getJSONObject("info").getString("prev");
+                                    Log.d(TAG, "onClick: 123" + CHAR_URL);
+                                    if (!CHAR_URL.equals("null")) {
+                                        getjson();
+                                    } else {
+                                        Toast.makeText(getContext(), "Doesn't exist", Toast.LENGTH_SHORT).show();
+                                        progressIndicator.setVisibility(View.GONE);
                                     }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 },
                 error -> {

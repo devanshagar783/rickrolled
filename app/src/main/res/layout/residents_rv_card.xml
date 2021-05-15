@@ -15,9 +15,12 @@
         >
 
         <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/residentImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/rickimage" />
+
+
 
     </androidx.cardview.widget.CardView>
 
