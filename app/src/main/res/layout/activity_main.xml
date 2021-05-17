@@ -7,6 +7,7 @@
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
     tools:context = ".MainActivity"
+    tools:openDrawer = "start"
     >
     
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -32,15 +33,16 @@
         
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width = "match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:layout_height = "match_parent">
-    
+            android:layout_height = "match_parent"
+            android:layout_marginTop = "?attr/actionBarSize"
+            >
+            
             <FrameLayout
                 android:id = "@+id/fragment"
                 android:layout_width = "match_parent"
                 android:layout_height = "match_parent"
                 />
-    
+            
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id = "@+id/progresshome"
                 android:layout_width = "wrap_content"
@@ -49,11 +51,10 @@
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintStart_toStartOf = "parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf = "parent"
                 />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
         
+        </androidx.constraintlayout.widget.ConstraintLayout>
     
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     
@@ -65,9 +66,10 @@
         app:headerLayout = "@layout/navigaion_header"
         app:menu = "@menu/drawer_menu"
         >
-    
-        <include layout="@layout/navigaion_header"/>
         
+        <include layout = "@layout/navigaion_header" />
+        <!--        this is to ensure header stays on top even after scrolling-->
+    
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
