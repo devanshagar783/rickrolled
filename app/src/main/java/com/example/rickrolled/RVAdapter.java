@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -87,7 +88,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .into(ACH.charimage);
 
                     ACH.itemView.setOnClickListener(view -> {
-                        CharacterFragment fragment = new CharacterFragment();
+//                        CharacterFragment fragment = new CharacterFragment();
                         Bundle bundle = new Bundle();
                         try {
                             bundle.putString("name", charsIndi.getString("name"));
@@ -100,8 +101,12 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } finally {
-                            fragment.setArguments(bundle);
-                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
+//                            fragment.setArguments(bundle);
+//                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
+                            Navigation.findNavController(ACH.itemView).setGraph(R.navigation.drawer_nav, bundle);
+                            Log.d(TAG, "onBindViewHolder: now navigating");
+                            Log.d(TAG, "onBindViewHolder: "+Navigation.findNavController(ACH.itemView).getGraph());
+                            Navigation.findNavController(ACH.itemView).navigate(R.id.action_allLocationsFragment_to_locationInfo);
                         }
                     });
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,6 +64,8 @@ public class AllCharactersFragment extends Fragment {
         buttonnext = v.findViewById(R.id.next);
         buttonprev = v.findViewById(R.id.prev);
         sparkyHome = v.findViewById(R.id.sparkyhome);
+
+//        Navigation.findNavController(AllCharactersFragment.java , R.id.)
 
         Glide.with(this)
                 .asGif()
