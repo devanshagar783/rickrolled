@@ -3,16 +3,24 @@ package com.example.rickrolled;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.transition.MaterialContainerTransform;
 import com.mikhaellopez.circularimageview.CircularImageView;
+
+import org.jetbrains.annotations.NotNull;
 
 public class CharacterFragment extends Fragment {
 
@@ -25,7 +33,14 @@ public class CharacterFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+//        getActivity().getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
+//        setSharedElementEnterTransition(new MaterialContainerTransform().setDuration(2000));
+//        getActivity().getSupportFragmentManager().addOnBackStackChangedListener((FragmentManager.OnBackStackChangedListener) this);
+//        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.card_transition));
+        setSharedElementReturnTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.card_transition));
     }
 
     @Override

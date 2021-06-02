@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.transition.Hold;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -51,6 +53,11 @@ public class AllCharactersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setExitTransition(new Hold());
+
+        setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.card_transition));
+        setSharedElementReturnTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.card_transition));
+
         setHasOptionsMenu(true);
     }
 

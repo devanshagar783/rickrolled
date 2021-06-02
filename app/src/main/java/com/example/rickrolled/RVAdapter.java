@@ -1,9 +1,12 @@
 package com.example.rickrolled;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +26,6 @@ import com.bumptech.glide.Glide;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -90,6 +91,18 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         CharacterFragment fragment = new CharacterFragment();
                         Bundle bundle = new Bundle();
                         try {
+//
+//                            Pair pair[]=new Pair[7];
+//                            pair[0] =new Pair(ACH.charname, "shared_name");
+//                            pair[1] =new Pair(ACH.charimage, "shared_image");
+//                            pair[2] =new Pair(ACH.chargender, "shared_gender");
+//                            pair[3] =new Pair(ACH.charstatus, "shared_status");
+//                            pair[4] =new Pair(ACH.charorigin, "shared_origin");
+//                            pair[5] =new Pair(ACH.charlastknown, "shared_last");
+//                            pair[6] =new Pair(ACH.charspecies, "shared_species");
+//                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, pair);
+//                            fragment.setArguments(options.toBundle());
+
                             bundle.putString("name", charsIndi.getString("name"));
                             bundle.putString("gender", charsIndi.getString("gender"));
                             bundle.putString("species", charsIndi.getString("species"));
@@ -101,7 +114,12 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             e.printStackTrace();
                         } finally {
                             fragment.setArguments(bundle);
-                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
+                            ((FragmentActivity) context).getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .addToBackStack("New Fragment")
+                                    .replace(R.id.fragment, fragment)
+                                    .addSharedElement(ACH.charimage, "shared_image")
+                                    .commit();
                         }
                     });
 
