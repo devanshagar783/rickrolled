@@ -24,6 +24,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -33,6 +37,8 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     String adapterType;
     JSONObject charsIndi;
     String imgURL;
+    //    LinkedHashMap<String, List<EpisodeData>> map;
+    List<Map.Entry<String, List<EpisodeData>>> newList;
 
 
     private static final String TAG = "RVAdapter";
@@ -41,6 +47,14 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
         this.data = data;
         this.adapterType = adapterType;
+    }
+
+    public RVAdapter(Context context, LinkedHashMap<String, List<EpisodeData>> map, String adapterType) {
+        this.context = context;
+//        this.map = map;
+        this.adapterType = adapterType;
+        newList = new ArrayList<>(map.entrySet());
+        // Get the i'th term
     }
 
     @NonNull
@@ -55,7 +69,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 View view2 = inflater.inflate(R.layout.all_location_card, parent, false);
                 return new AllLocationsHolder(view2);
             case "ALL_EPISODES":
-                View view3 = inflater.inflate(R.layout.char_view, parent, false);
+                View view3 = inflater.inflate(R.layout.all_ep_card, parent, false);
                 return new AllEpisodesHolder(view3);
             case "ALL_RESIDENTS":
                 View view4 = inflater.inflate(R.layout.residents_rv_card, parent, false);
@@ -136,6 +150,18 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 break;
 
+
+            case "ALL_EPISODES":
+                AllEpisodesHolder AEH = (AllEpisodesHolder) holder;
+
+                String key = newList.get(position).getKey();
+                List<EpisodeData> value = newList.get(position).getValue();
+
+                AEH.seasonNum.setText(key);
+
+                break;
+
+
             case "ALL_RESIDENTS":
                 AllResidentsHolder ARH = (AllResidentsHolder) holder;
                 try {
@@ -198,6 +224,8 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
+        if (newList != null)
+            return newList.size();
         return data.length();
     }
 
@@ -239,9 +267,16 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static class AllEpisodesHolder extends RecyclerView.ViewHolder {
         //fields
+        ImageView dropdown;
+        RecyclerView episodeNum;
+        TextView seasonNum;
+
         public AllEpisodesHolder(@NonNull View itemView) {
             super(itemView);
             //initialize values
+            dropdown = itemView.findViewById(R.id.drop_down);
+            episodeNum = itemView.findViewById(R.id.episodeRV);
+            seasonNum = itemView.findViewById(R.id.season_num);
         }
     }
 }

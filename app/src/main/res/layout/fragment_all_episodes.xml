@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
     tools:context = ".AllEpisodesFragment"
     >
     
-    <TextView
-        android:layout_width = "wrap_content"
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id = "@+id/progressbar"
+        android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:text = "@string/hello_blank_fragment"
-        android:layout_centerInParent="true"
-        android:id="@+id/tv_episode"
+        android:indeterminate = "true"
+        app:layout_constraintEnd_toEndOf = "parent"
+        app:layout_constraintStart_toStartOf = "parent"
+        app:layout_constraintTop_toTopOf = "parent"
         />
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id = "@+id/lay1"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:paddingBottom = "120dp"
+        app:layout_constraintEnd_toEndOf = "parent"
+        app:layout_constraintStart_toStartOf = "parent"
+        app:layout_constraintTop_toBottomOf = "@+id/progressbar"
+        >
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id = "@+id/seasonView"
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            />
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

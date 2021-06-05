@@ -3,6 +3,8 @@ package com.example.rickrolled;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +35,8 @@ public class AllEpisodesFragment extends Fragment {
     public String EPISODES_URL = "https://rickandmortyapi.com/api/episode";
     private JSONObject jsonObject;
     private JSONArray jsonArray;
-    private TextView temp_episode;
+    private LinearProgressIndicator progressIndicator;
+    private RecyclerView episodesRV;
     private List<EpisodeData> episodeDataList = new ArrayList<>();
 
     public AllEpisodesFragment() {
@@ -49,8 +53,8 @@ public class AllEpisodesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_all_episodes, container, false);
-        temp_episode = v.findViewById(R.id.tv_episode);
-        temp_episode.setText("");
+        episodesRV = v.findViewById(R.id.seasonView);
+        progressIndicator = v.findViewById(R.id.progressbar);
         getJson();
         Log.d(TAG, "onCreateView: " + episodeDataList.size());
         return v;
@@ -64,7 +68,6 @@ public class AllEpisodesFragment extends Fragment {
                         jsonArray = jsonObject.getJSONArray("results");
                         for (int i = 0; i < jsonArray.length(); ++i) {
                             JSONObject episodeData = jsonArray.getJSONObject(i);
-                            temp_episode.append(episodeData.getString("name") + "\n");
                             JSONArray characters = episodeData.getJSONArray("characters");
                             List<String> charName = new ArrayList<>();
                             for (int j = 0; j < characters.length(); ++j) {
@@ -114,9 +117,14 @@ public class AllEpisodesFragment extends Fragment {
         }
 
         map.put(currentSeason, currentList);
-        map.keySet().forEach(key -> {
-            Log.d(TAG, "arrangeEpisodes: key: " + key + "  value: " + map.get(key));
-        });
+        RVAdapter rva = new RVAdapter(getContext(), map, getResources().getString(R.string.allEpisodes));
+        episodesRV.setAdapter(rva);
+        episodesRV.setLayoutManager(new LinearLayoutManager(getContext()));
+        //then make the progress bar invisible
+        progressIndicator.setVisibility(View.GONE);
+//        map.keySet().forEach(key -> {
+//            Log.d(TAG, "arrangeEpisodes: key: " + key + "  value: " + map.get(key));
+//        });
 
     }
 }
