@@ -98,7 +98,7 @@ public class AllEpisodesFragment extends Fragment {
 
     private void arrangeEpisodes() {
         Pattern pattern = Pattern.compile("^S\\d\\d");
-        LinkedHashMap<String, List<EpisodeData>> map = new LinkedHashMap<>();
+        LinkedHashMap<String, List<EpisodeData>> map = new LinkedHashMap<String, List<EpisodeData>>();
 
         String currentSeason = "";
         List<EpisodeData> currentList = new ArrayList<>();
@@ -107,9 +107,19 @@ public class AllEpisodesFragment extends Fragment {
             Matcher matcher = pattern.matcher(episodeDataList.get(i).getEpisode());
             if (matcher.find()) {
                 if (!currentSeason.equals(matcher.group())) {
-                    if (!currentSeason.equals(""))
+                    if (!currentSeason.equals("")) {
                         map.put(currentSeason, currentList);
+                        Log.d(TAG, "arrangeEpisodes: old inside" + currentSeason);
+                        Log.d(TAG, "arrangeEpisodes: old inside" + currentList);
+                        Log.d(TAG, "arrangeEpisodes: old inside" + map.entrySet());
+//                        Log.d(TAG, "arrangeEpisodes: old" + currentSeason);
+//                        Log.d(TAG, "arrangeEpisodes: old"+currentList);
+//                        Log.d(TAG, "arrangeEpisodes: old map"+map.get(currentSeason));
+//                        Log.d(TAG, "arrangeEpisodes: s01 value" + map.get("S01"));
+                    }
                     currentSeason = matcher.group();
+                    Log.d(TAG, "arrangeEpisodes: old" + currentSeason);
+                    Log.d(TAG, "arrangeEpisodes: old" + currentList);
                     currentList.clear();
                 }
                 currentList.add(episodeDataList.get(i));
@@ -117,14 +127,17 @@ public class AllEpisodesFragment extends Fragment {
         }
 
         map.put(currentSeason, currentList);
+//        Log.d(TAG, "arrangeEpisodes: old"+currentList);
+
+        map.keySet().forEach(key -> {
+//            Log.d(TAG, "arrangeEpisodesadap: key: " + key + "  value: " + map.get(key));
+        });
+//        Log.d(TAG, "arrangeEpisodesadap: map"+map);
         RVAdapter rva = new RVAdapter(getContext(), map, getResources().getString(R.string.allEpisodes));
         episodesRV.setAdapter(rva);
         episodesRV.setLayoutManager(new LinearLayoutManager(getContext()));
         //then make the progress bar invisible
         progressIndicator.setVisibility(View.GONE);
-//        map.keySet().forEach(key -> {
-//            Log.d(TAG, "arrangeEpisodes: key: " + key + "  value: " + map.get(key));
-//        });
 
     }
 }

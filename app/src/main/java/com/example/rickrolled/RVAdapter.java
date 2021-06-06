@@ -7,11 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -39,6 +42,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     String imgURL;
     //    LinkedHashMap<String, List<EpisodeData>> map;
     List<Map.Entry<String, List<EpisodeData>>> newList;
+    List<EpisodeData> episodes;
 
 
     private static final String TAG = "RVAdapter";
@@ -53,8 +57,16 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
 //        this.map = map;
         this.adapterType = adapterType;
+//        map.keySet().forEach(key -> Log.d(TAG, "RVAdapter: map"+map.get(key)));
         newList = new ArrayList<>(map.entrySet());
+//        Log.d(TAG, "RVAdapter: list"+newList);
         // Get the i'th term
+    }
+
+    public RVAdapter(Context context, String adapterType, List<EpisodeData> episodes) {
+        this.context = context;
+        this.adapterType = adapterType;
+        this.episodes = episodes;
     }
 
     @NonNull
@@ -74,6 +86,9 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case "ALL_RESIDENTS":
                 View view4 = inflater.inflate(R.layout.residents_rv_card, parent, false);
                 return new AllResidentsHolder(view4);
+            case "ONE_EPISODE":
+                View view5 = inflater.inflate(R.layout.ep_view, parent, false);
+                return new OneEpisodeHolder(view5);
             default:
                 return null;
         }
@@ -156,9 +171,33 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 String key = newList.get(position).getKey();
                 List<EpisodeData> value = newList.get(position).getValue();
+//                Log.d(TAG, "onBindViewHolder: "+key + "     " + value.get(0));
+
 
                 AEH.seasonNum.setText(key);
+                AEH.dropdown.getLayoutParams().width = 100;
+                AEH.episodeNum.setVisibility(View.GONE);
+                RVAdapter rva = new RVAdapter(context, context.getResources().getString(R.string.oneEpisode), value);
+//                Log.d(TAG, "onBindViewHolder: "+key + "     " + value);
+                AEH.episodeNum.setAdapter(rva);
+                AEH.episodeNum.setLayoutManager(new LinearLayoutManager(context));
+                Animation arrowAnimShow = AnimationUtils.loadAnimation(context, R.anim.dropdown_arrow);
+                Animation arrowAnimCollapse = AnimationUtils.loadAnimation(context, R.anim.drppdown_arrow_collapse);
+                AEH.dropdown.setOnClickListener(v -> {
+                    if (AEH.episodeNum.getVisibility() == View.GONE) {
+                        AEH.dropdown.startAnimation(arrowAnimShow);
+                        AEH.episodeNum.setVisibility(View.VISIBLE);
+                    } else {
+                        AEH.dropdown.startAnimation(arrowAnimCollapse);
+                        AEH.episodeNum.setVisibility(View.GONE);
+                    }
+                });
 
+                break;
+
+            case "ONE_EPISODE":
+                OneEpisodeHolder OEH = (OneEpisodeHolder) holder;
+                OEH.name.setText(episodes.get(position).getName());
                 break;
 
 
@@ -209,16 +248,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     e.printStackTrace();
                 }
                 break;
-
-//
-//            case "ALL_EPISODES":
-//                AllEpisodesHolder AEH = (AllEpisodesHolder) holder;
-//                try {
-//                    //Logic
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                break;
         }
     }
 
@@ -226,6 +255,8 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemCount() {
         if (newList != null)
             return newList.size();
+        if (episodes != null)
+            return episodes.size();
         return data.length();
     }
 
@@ -277,6 +308,16 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             dropdown = itemView.findViewById(R.id.drop_down);
             episodeNum = itemView.findViewById(R.id.episodeRV);
             seasonNum = itemView.findViewById(R.id.season_num);
+        }
+    }
+
+    public static class OneEpisodeHolder extends RecyclerView.ViewHolder {
+
+        TextView name;
+
+        public OneEpisodeHolder(@NonNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.episode_name);
         }
     }
 }
