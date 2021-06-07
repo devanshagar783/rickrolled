@@ -56,7 +56,6 @@ public class AllEpisodesFragment extends Fragment {
         episodesRV = v.findViewById(R.id.seasonView);
         progressIndicator = v.findViewById(R.id.progressbar);
         getJson();
-        Log.d(TAG, "onCreateView: " + episodeDataList.size());
         return v;
     }
 
@@ -108,36 +107,20 @@ public class AllEpisodesFragment extends Fragment {
             if (matcher.find()) {
                 if (!currentSeason.equals(matcher.group())) {
                     if (!currentSeason.equals("")) {
-                        map.put(currentSeason, currentList);
-                        Log.d(TAG, "arrangeEpisodes: old inside" + currentSeason);
-                        Log.d(TAG, "arrangeEpisodes: old inside" + currentList);
-                        Log.d(TAG, "arrangeEpisodes: old inside" + map.entrySet());
-//                        Log.d(TAG, "arrangeEpisodes: old" + currentSeason);
-//                        Log.d(TAG, "arrangeEpisodes: old"+currentList);
-//                        Log.d(TAG, "arrangeEpisodes: old map"+map.get(currentSeason));
-//                        Log.d(TAG, "arrangeEpisodes: s01 value" + map.get("S01"));
+                        List<EpisodeData> newList = new ArrayList<>();
+                        newList.addAll(currentList);
+                        map.put(currentSeason, newList);
                     }
                     currentSeason = matcher.group();
-                    Log.d(TAG, "arrangeEpisodes: old" + currentSeason);
-                    Log.d(TAG, "arrangeEpisodes: old" + currentList);
                     currentList.clear();
                 }
                 currentList.add(episodeDataList.get(i));
             }
         }
-
         map.put(currentSeason, currentList);
-//        Log.d(TAG, "arrangeEpisodes: old"+currentList);
-
-        map.keySet().forEach(key -> {
-//            Log.d(TAG, "arrangeEpisodesadap: key: " + key + "  value: " + map.get(key));
-        });
-//        Log.d(TAG, "arrangeEpisodesadap: map"+map);
         RVAdapter rva = new RVAdapter(getContext(), map, getResources().getString(R.string.allEpisodes));
         episodesRV.setAdapter(rva);
         episodesRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        //then make the progress bar invisible
         progressIndicator.setVisibility(View.GONE);
-
     }
 }

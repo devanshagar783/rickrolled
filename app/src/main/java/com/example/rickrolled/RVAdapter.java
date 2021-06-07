@@ -40,7 +40,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     String adapterType;
     JSONObject charsIndi;
     String imgURL;
-    //    LinkedHashMap<String, List<EpisodeData>> map;
     List<Map.Entry<String, List<EpisodeData>>> newList;
     List<EpisodeData> episodes;
 
@@ -55,12 +54,8 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public RVAdapter(Context context, LinkedHashMap<String, List<EpisodeData>> map, String adapterType) {
         this.context = context;
-//        this.map = map;
         this.adapterType = adapterType;
-//        map.keySet().forEach(key -> Log.d(TAG, "RVAdapter: map"+map.get(key)));
         newList = new ArrayList<>(map.entrySet());
-//        Log.d(TAG, "RVAdapter: list"+newList);
-        // Get the i'th term
     }
 
     public RVAdapter(Context context, String adapterType, List<EpisodeData> episodes) {
@@ -73,22 +68,23 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
+        View view;
         switch (adapterType) {
             case "ALL_CHARACTERS":
-                View view1 = inflater.inflate(R.layout.char_view, parent, false);
-                return new AllCharactersHolder(view1);
+                view = inflater.inflate(R.layout.char_view, parent, false);
+                return new AllCharactersHolder(view);
             case "ALL_LOCATIONS":
-                View view2 = inflater.inflate(R.layout.all_location_card, parent, false);
-                return new AllLocationsHolder(view2);
+                view = inflater.inflate(R.layout.all_location_card, parent, false);
+                return new AllLocationsHolder(view);
             case "ALL_EPISODES":
-                View view3 = inflater.inflate(R.layout.all_ep_card, parent, false);
-                return new AllEpisodesHolder(view3);
+                view = inflater.inflate(R.layout.all_ep_card, parent, false);
+                return new AllEpisodesHolder(view);
             case "ALL_RESIDENTS":
-                View view4 = inflater.inflate(R.layout.residents_rv_card, parent, false);
-                return new AllResidentsHolder(view4);
+                view = inflater.inflate(R.layout.residents_rv_card, parent, false);
+                return new AllResidentsHolder(view);
             case "ONE_EPISODE":
-                View view5 = inflater.inflate(R.layout.ep_view, parent, false);
-                return new OneEpisodeHolder(view5);
+                view = inflater.inflate(R.layout.ep_view, parent, false);
+                return new OneEpisodeHolder(view);
             default:
                 return null;
         }
@@ -165,20 +161,15 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 break;
 
-
             case "ALL_EPISODES":
                 AllEpisodesHolder AEH = (AllEpisodesHolder) holder;
 
                 String key = newList.get(position).getKey();
                 List<EpisodeData> value = newList.get(position).getValue();
-//                Log.d(TAG, "onBindViewHolder: "+key + "     " + value.get(0));
-
-
                 AEH.seasonNum.setText(key);
                 AEH.dropdown.getLayoutParams().width = 100;
                 AEH.episodeNum.setVisibility(View.GONE);
                 RVAdapter rva = new RVAdapter(context, context.getResources().getString(R.string.oneEpisode), value);
-//                Log.d(TAG, "onBindViewHolder: "+key + "     " + value);
                 AEH.episodeNum.setAdapter(rva);
                 AEH.episodeNum.setLayoutManager(new LinearLayoutManager(context));
                 Animation arrowAnimShow = AnimationUtils.loadAnimation(context, R.anim.dropdown_arrow);
@@ -192,7 +183,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         AEH.episodeNum.setVisibility(View.GONE);
                     }
                 });
-
                 break;
 
             case "ONE_EPISODE":
@@ -200,12 +190,10 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 OEH.name.setText(episodes.get(position).getName());
                 break;
 
-
             case "ALL_RESIDENTS":
                 AllResidentsHolder ARH = (AllResidentsHolder) holder;
                 try {
                     String residentURL = data.getString(position);
-//                    Log.d(TAG, "onBindViewHolder: " + residentURL);
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, residentURL,
                             response -> {
                                 try {
