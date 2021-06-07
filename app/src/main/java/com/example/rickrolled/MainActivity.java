@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             count = Integer.parseInt(jsonObject.getJSONObject("info").getString("count"));
 
                             Random rand = new Random();
-                            random = rand.nextInt(count);
+                            random = rand.nextInt(count) + 1;
                             StringRequest stringRequest = new StringRequest(Request.Method.GET, CHAR_URL + "/" + String.valueOf(random),
                                     new Response.Listener<String>() {
                                         @Override
@@ -137,6 +137,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.all_locations:
                 fragment = new AllLocationsFragment();
+                break;
+
+            case R.id.all_episodes:
+                fragment = new AllEpisodesFragment();
                 break;
 
             case R.id.family:
