@@ -143,6 +143,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new AllEpisodesFragment();
                 break;
 
+            case R.id.favourite:
+                fragment = new FavouriteEpisodesFragment();
+
             case R.id.family:
                 fragment = new FamilyTreeFragment();
                 break;
