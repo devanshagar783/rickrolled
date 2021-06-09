@@ -23,7 +23,7 @@
     <string name = "allEpisodes">ALL_EPISODES</string>
     <string name = "allResidents">ALL_RESIDENTS</string>
     <string name="oneEpisode">ONE_EPISODE</string>
-
+  
     <string name = "LOCATION_URL">https://rickandmortyapi.com/api/location</string>
 
     <string-array name="menuQuotes">

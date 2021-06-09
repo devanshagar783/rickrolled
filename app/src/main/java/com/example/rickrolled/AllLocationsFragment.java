@@ -84,9 +84,9 @@ public class AllLocationsFragment extends Fragment {
                         e.printStackTrace();
                         Log.d(TAG, "onResponse: " + e.getMessage());
                     } finally {
-                        Resources res = getResources();
+//                        Resources res = getResources();
                         locationsRV = v.findViewById(R.id.locationsRV);
-                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, res.getString(R.string.allLocations));
+                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, getResources().getString(R.string.allLocations));
                         locationsRV.setAdapter(rva);
                         locationsRV.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressIndicator.setVisibility(View.GONE);
