@@ -36,16 +36,14 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_height = "match_parent">
             
-            <androidx.fragment.app.FragmentContainerView
+            <fragment
                 android:id = "@+id/fragment"
                 android:name = "androidx.navigation.fragment.NavHostFragment"
                 android:layout_width = "match_parent"
                 android:layout_height = "match_parent"
                 app:defaultNavHost = "true"
                 app:navGraph = "@navigation/drawer_nav"/>
-        
-        
-        
+            
         </androidx.constraintlayout.widget.ConstraintLayout>
     
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -55,6 +53,7 @@
         android:layout_width = "wrap_content"
         android:layout_height = "match_parent"
         android:layout_gravity = "start"
+        android:fitsSystemWindows = "true"
         app:headerLayout = "@layout/navigaion_header"
         app:menu = "@menu/drawer_menu"
         >

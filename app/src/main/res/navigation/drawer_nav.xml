@@ -22,47 +22,16 @@
         android:name = "com.example.rickrolled.FamilyTreeFragment"
         android:label = "fragment_family_tree"
         tools:layout = "@layout/fragment_family_tree"
-        >
-        <action
-            android:id = "@+id/action_familyTreeFragment_to_characterFragment"
-            app:destination = "@id/characterFragment"
-            />
-    </fragment>
+        />
     <fragment
         android:id = "@+id/allLocationsFragment"
         android:name = "com.example.rickrolled.AllLocationsFragment"
         android:label = "fragment_all_locations"
         tools:layout = "@layout/fragment_all_locations"
-        >
-        <action
-            android:id = "@+id/action_allLocationsFragment_to_locationInfo"
-            app:destination = "@id/locationInfo"
-            />
-    </fragment>
-    <fragment
-        android:id = "@+id/characterFragment"
-        android:name = "com.example.rickrolled.CharacterFragment"
-        android:label = "fragment_character"
-        tools:layout = "@layout/fragment_character"
         />
-    <fragment
-        android:id = "@+id/locationInfo"
-        android:name = "com.example.rickrolled.LocationInfo"
-        android:label = "fragment_location_info"
-        tools:layout = "@layout/fragment_location_info"
-        >
-        <argument
-            android:name = "char_data"
-            />
-    </fragment>
     <fragment
         android:id = "@+id/allCharactersFragment"
         android:name = "com.example.rickrolled.AllCharactersFragment"
         android:label = "AllCharactersFragment"
-        >
-        <action
-            android:id = "@+id/action_allCharactersFragment2_to_characterFragment"
-            app:destination = "@id/characterFragment"
-            />
-    </fragment>
+        />
 </navigation>

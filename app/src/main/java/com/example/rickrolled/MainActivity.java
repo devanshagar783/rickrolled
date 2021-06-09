@@ -65,15 +65,20 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.hometoolbar);
         setSupportActionBar(toolbar);
 
-        Log.d(TAG, "onCreate: going to json");
+//        Log.d(TAG, "onCreate: going to json");
         getjson();
-        Log.d(TAG, "onCreate: return from json");
-        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-        assert navHostFragment != null;
-        navController = navHostFragment.getNavController();
-        Log.d(TAG, "onCreate: "+navController.getGraph());
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).setOpenableLayout(drawerLayout).build();
+//        Log.d(TAG, "onCreate: return from json");
+//        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+//        assert navHostFragment != null;
+//        navController = navHostFragment.getNavController();
+//        Log.d(TAG, "onCreate: "+navController.getGraph());
+//        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).setOpenableLayout(drawerLayout).build();
 
+        appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.infoFragment,R.id.family_tree, R.id.allCharactersFragment, R.id.allLocationsFragment)
+                .setDrawerLayout(drawerLayout)
+                .build();
+        navController =Navigation.findNavController(this, R.id.fragment);
 //        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
 //                this,
 //                drawerLayout,

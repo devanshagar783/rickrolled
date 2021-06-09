@@ -106,7 +106,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             Navigation.findNavController(ACH.itemView).setGraph(R.navigation.drawer_nav, bundle);
                             Log.d(TAG, "onBindViewHolder: now navigating");
                             Log.d(TAG, "onBindViewHolder: "+Navigation.findNavController(ACH.itemView).getGraph());
-                            Navigation.findNavController(ACH.itemView).navigate(R.id.action_allLocationsFragment_to_locationInfo);
+//                            Navigation.findNavController(ACH.itemView).navigate(R.id.action_allLocationsFragment_to_locationInfo);
                         }
                     });
 

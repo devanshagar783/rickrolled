@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android = "http://schemas.android.com/apk/res/android">
     
-    <item android:id="@id/infoFragment"
-        android:title="Home"/>
+    <group android:id="@+id/group_one"
+        android:checkableBehavior="single">
     
-    <item android:id="@id/familyTreeFragment"
-        android:title="Meet the family"/>
+        <item android:id="@id/infoFragment"
+            android:title="Home"/>
     
-    <item android:id="@id/allCharactersFragment"
-        android:title="All Characters"/>
+        <item android:id="@id/familyTreeFragment"
+            android:title="Meet the family"/>
     
-    <item android:id="@id/allLocationsFragment"
-        android:title="All Locations"/>
+        <item android:id="@id/allCharactersFragment"
+            android:title="All Characters"/>
     
-    <item android:id="@+id/all_episode"
-        android:title="All Episodes"/>
+        <item android:id="@id/allLocationsFragment"
+            android:title="All Locations"/>
     
-    <item android:id="@+id/watching"
-        android:title="Watching"/>
+        <item android:id="@+id/all_episode"
+            android:title="All Episodes"/>
     
-    <item android:id="@+id/favourite"
-        android:title="Favourites"/>
+        <item android:id="@+id/watching"
+            android:title="Watching"/>
     
-    <item android:id="@+id/logout"
-        android:title="Logout"/>
+        <item android:id="@+id/favourite"
+            android:title="Favourites"/>
+    
+        <item android:id="@+id/logout"
+            android:title="Logout"/>
+        
+    </group>
+    
 </menu>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 
 public class FamilyTreeFragment extends Fragment {
 
+    private static final String TAG = "FamilyTreeFragment";
     private static final String INDICHAR_URL = "https://rickandmortyapi.com/api/character/";
     private View v;
     private ImageView rick, beth, jerry, morty, summer;
@@ -39,6 +41,7 @@ public class FamilyTreeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: called");
         v = inflater.inflate(R.layout.fragment_family_tree, container, false);
         rick = v.findViewById(R.id.rickimg);
         beth = v.findViewById(R.id.bethimage);
