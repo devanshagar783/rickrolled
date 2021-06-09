@@ -8,11 +8,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private Toolbar toolbar;
     private Fragment fragment;
+    private TextView randomQuotes;
+    private String [] quotes;
 
     JSONObject jsonObject;
     JSONArray jsonArray;
@@ -52,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawerlayout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.hometoolbar);
+        randomQuotes = findViewById(R.id.randomQuote);
+        quotes = getResources().getStringArray(R.array.menuQuotes);
+
+        int randomIndex = new Random().nextInt(quotes.length);
+        randomQuotes.setText(quotes[randomIndex]);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
