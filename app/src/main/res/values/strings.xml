@@ -22,8 +22,7 @@
     <string name = "allLocations">ALL_LOCATIONS</string>
     <string name = "allEpisodes">ALL_EPISODES</string>
     <string name = "allResidents">ALL_RESIDENTS</string>
-    <string name = "oneEpisode">ONE_EPISODE</string>
+    <string name="oneEpisode">ONE_EPISODE</string>
     
     <string name = "LOCATION_URL">https://rickandmortyapi.com/api/location</string>
-    <string name = "hello_blank_fragment">Hello blank fragment</string>
 </resources>
