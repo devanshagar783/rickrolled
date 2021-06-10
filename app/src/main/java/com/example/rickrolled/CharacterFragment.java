@@ -40,20 +40,19 @@ public class CharacterFragment extends Fragment {
         species = v.findViewById(R.id.charspecies);
         origin = v.findViewById(R.id.charorigin);
         location = v.findViewById(R.id.charlastknown);
-
-        Resources resources = getResources();
+        CharacterFragmentArgs args = CharacterFragmentArgs.fromBundle(getArguments());
 
         Glide.with(getActivity().getApplicationContext())
                 .asBitmap()
-                .load(getArguments().getString("image"))
+                .load(args.getImage())
                 .into(imageView);
 
-        name.setText(getArguments().getString("name"));
-        status.setText(String.format(resources.getString(R.string.chardoa), getArguments().getString("status")));
-        gender.setText(getArguments().getString("gender"));
-        species.setText(getArguments().getString("species"));
-        origin.setText(getArguments().getString("origin"));
-        location.setText(getArguments().getString("location"));
+        name.setText(args.getName());
+        status.setText(String.format(getResources().getString(R.string.chardoa), args.getStatus()));
+        gender.setText(args.getGender());
+        species.setText(args.getSpecies());
+        origin.setText(args.getOrigin());
+        location.setText(args.getLocation());
 
         return v;
     }
