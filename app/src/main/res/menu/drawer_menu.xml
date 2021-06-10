@@ -9,21 +9,16 @@
     
         <item android:id="@id/familyTreeFragment"
             android:title="Meet the family"/>
-    
-<!-- <<<<<<< main -->
-    <item android:id="@+id/all_episodes"
-        android:title="All Episodes"/>
-<!-- ======= -->
+
         <item android:id="@id/allCharactersFragment"
             android:title="All Characters"/>
-<!-- >>>>>>> navigationBranch -->
     
         <item android:id="@id/allLocationsFragment"
             android:title="All Locations"/>
-<!--     
-        <item android:id="@+id/all_episode"
+    
+        <item android:id="@+id/all_episodes"
             android:title="All Episodes"/>
-     -->
+
         <item android:id="@+id/watching"
             android:title="Watching"/>
     

@@ -3,7 +3,11 @@ package com.example.rickrolled;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,10 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -22,6 +25,7 @@ import org.json.JSONException;
 public class LocationInfo extends Fragment {
 
     private static final String TAG = "LocationInfo";
+    NavController controller;
 
     public LocationInfo() {
         // Required empty public constructor
@@ -51,19 +55,26 @@ public class LocationInfo extends Fragment {
         locationtype.setText(String.format(resources.getString(R.string.locationtype), getArguments().getString("type")));
         locationdimension.setText(String.format(resources.getString(R.string.locationdimension), getArguments().getString("dimension")));
         String residents = getArguments().getString("residents");
-        Log.d(TAG, "onCreateView:"+residents);
+        Log.d(TAG, "onCreateView:" + residents);
 
         try {
             residentsJSON = new JSONArray(residents);
-            Log.d(TAG, "onCreateView2: "+residentsJSON.getString(1));
+            Log.d(TAG, "onCreateView2: " + residentsJSON.getString(1));
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {
-            RVAdapter rva = new RVAdapter(getContext(), residentsJSON, resources.getString(R.string.allResidents));
+            RVAdapter rva = new RVAdapter(getContext(), residentsJSON, resources.getString(R.string.allResidents), controller);
             residentsRV.setAdapter(rva);
             residentsRV.setLayoutManager(new GridLayoutManager(getContext(), 3));
         }
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        controller = Navigation.findNavController(view);
+        Log.d(TAG, "onViewCreated: called" + controller);
     }
 }

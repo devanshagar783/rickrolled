@@ -1,7 +1,6 @@
 package com.example.rickrolled;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,7 +52,6 @@ public class AllCharactersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setHasOptionsMenu(true);
     }
 
     @Override
@@ -67,8 +63,6 @@ public class AllCharactersFragment extends Fragment {
         buttonnext = v.findViewById(R.id.next);
         buttonprev = v.findViewById(R.id.prev);
         sparkyHome = v.findViewById(R.id.sparkyhome);
-
-//        Navigation.findNavController(AllCharactersFragment.java , R.id.)
 
         Glide.with(this)
                 .asGif()
@@ -96,9 +90,8 @@ public class AllCharactersFragment extends Fragment {
                         e.printStackTrace();
                         Log.d(TAG, "onResponse: " + e.getMessage());
                     } finally {
-                        Resources res = getResources();
                         charView = v.findViewById(R.id.charView);
-                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, res.getString(R.string.allCharacters), controller);
+                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, getResources().getString(R.string.allCharacters), controller);
                         charView.setAdapter(rva);
                         charView.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressIndicator.setVisibility(View.GONE);
@@ -147,5 +140,6 @@ public class AllCharactersFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller = Navigation.findNavController(view);
+        Log.d(TAG, "onViewCreated: called" + controller);
     }
 }

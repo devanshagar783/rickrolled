@@ -2,7 +2,6 @@ package com.example.rickrolled;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-// <<<<<<< main
 import androidx.recyclerview.widget.LinearLayoutManager;
-// =======
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-// >>>>>>> navigationBranch
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -36,7 +30,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -45,13 +38,9 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     String adapterType;
     JSONObject charsIndi;
     String imgURL;
-// <<<<<<< main
     List<Map.Entry<String, List<EpisodeData>>> newList;
     List<EpisodeData> episodes;
-// =======
     NavController controller;
-// >>>>>>> navigationBranch
-
 
     private static final String TAG = "RVAdapter";
 
@@ -61,7 +50,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.adapterType = adapterType;
     }
 
-// <<<<<<< main
     public RVAdapter(Context context, LinkedHashMap<String, List<EpisodeData>> map, String adapterType) {
         this.context = context;
         this.adapterType = adapterType;
@@ -73,13 +61,12 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.adapterType = adapterType;
         this.episodes = episodes;
     }
-// =======
+
     public RVAdapter(Context context, JSONArray data, String adapterType, NavController controller) {
         this.context = context;
         this.data = data;
         this.adapterType = adapterType;
         this.controller = controller;
-// >>>>>>> navigationBranch
     }
 
     @NonNull
@@ -133,7 +120,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         AllCharactersFragmentDirections.ActionAllCharactersFragmentToCharacterFragment action = AllCharactersFragmentDirections.actionAllCharactersFragmentToCharacterFragment();
                         try {
                             action.setName(charsIndi.getString("name"));
-
                             action.setGender(charsIndi.getString("gender"));
                             action.setSpecies(charsIndi.getString("species"));
                             action.setStatus(charsIndi.getString("status"));
@@ -144,30 +130,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-//                        controller.navigate(R.id.action_allCharactersFragment_to_characterFragment);
-
-//                        CharacterFragment fragment = new CharacterFragment();
-//                        Bundle bundle = new Bundle();
-//                        try {
-//                            bundle.putString("name", charsIndi.getString("name"));
-//                            bundle.putString("gender", charsIndi.getString("gender"));
-//                            bundle.putString("species", charsIndi.getString("species"));
-//                            bundle.putString("status", charsIndi.getString("status"));
-//                            bundle.putString("origin", charsIndi.getJSONObject("origin").getString("name"));
-//                            bundle.putString("location", charsIndi.getJSONObject("location").getString("name"));
-//                            bundle.putString("image", charsIndi.getString("image"));
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        } finally {
-////                            fragment.setArguments(bundle);
-////                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
-////                            Navigation.findNavController(ACH.itemView).setGraph(R.navigation.drawer_nav, bundle);
-//                            Log.d(TAG, "onBindViewHolder: now navigating");
-//                            Log.d(TAG, "onBindViewHolder: "+Navigation.findNavController(ACH.itemView).getGraph());
-////                            Navigation.findNavController(ACH.itemView).navigate(R.id.action_allLocationsFragment_to_locationInfo);
-//                        }
                     });
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -178,22 +141,16 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 try {
                     JSONObject locIndi = data.getJSONObject(position);
                     ALH.planetName.setText(locIndi.getString("name"));
-
                     ALH.itemView.setOnClickListener(view -> {
-
-                        LocationInfo fragment = new LocationInfo();
-                        Bundle bundle = new Bundle();
+                        AllLocationsFragmentDirections.ActionAllLocationsFragmentToLocationInfo action = AllLocationsFragmentDirections.actionAllLocationsFragmentToLocationInfo();
                         try {
-                            bundle.putString("name", locIndi.getString("name"));
-                            bundle.putString("type", locIndi.getString("type"));
-                            bundle.putString("dimension", locIndi.getString("dimension"));
-                            bundle.putString("residents", locIndi.getJSONArray("residents").toString());
+                            action.setName(locIndi.getString("name"));
+                            action.setType(locIndi.getString("type"));
+                            action.setDimension(locIndi.getString("dimension"));
+                            action.setResidents(locIndi.getJSONArray("residents").toString());
+                            controller.navigate(action);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        } finally {
-
-//                            fragment.setArguments(bundle);
-//                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
                         }
                     });
                 } catch (JSONException e) {
@@ -255,21 +212,18 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     requestQueue.add(stringRequest);
 
                     ARH.itemView.setOnClickListener(view -> {
-                        CharacterFragment fragment = new CharacterFragment();
-                        Bundle bundle = new Bundle();
+                        LocationInfoDirections.ActionLocationInfoToCharacterFragment action = LocationInfoDirections.actionLocationInfoToCharacterFragment();
                         try {
-                            bundle.putString("name", charsIndi.getString("name"));
-                            bundle.putString("gender", charsIndi.getString("gender"));
-                            bundle.putString("species", charsIndi.getString("species"));
-                            bundle.putString("status", charsIndi.getString("status"));
-                            bundle.putString("origin", charsIndi.getJSONObject("origin").getString("name"));
-                            bundle.putString("location", charsIndi.getJSONObject("location").getString("name"));
-                            bundle.putString("image", charsIndi.getString("image"));
+                            action.setName(charsIndi.getString("name"));
+                            action.setGender(charsIndi.getString("gender"));
+                            action.setSpecies(charsIndi.getString("species"));
+                            action.setStatus(charsIndi.getString("status"));
+                            action.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
+                            action.setLocation(charsIndi.getJSONObject("location").getString("name"));
+                            action.setImage(charsIndi.getString("image"));
+                            controller.navigate(action);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        } finally {
-                            fragment.setArguments(bundle);
-                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
                         }
                     });
                 } catch (JSONException e) {

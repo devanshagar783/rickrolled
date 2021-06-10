@@ -1,9 +1,12 @@
 package com.example.rickrolled;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,29 +16,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Random;
-
-
 public class AllLocationsFragment extends Fragment {
 
-    private static final String TAG = "Your papa";
+    private static final String TAG = "AllLocationsFragment";
     View v;
 
     JSONObject jsonObject;
@@ -45,6 +42,7 @@ public class AllLocationsFragment extends Fragment {
     ImageView sparkyHome;
     private LinearProgressIndicator progressIndicator;
     String LOC_URL = "https://rickandmortyapi.com/api/location";
+    NavController controller;
 
     public AllLocationsFragment() {
         // Required empty public constructor
@@ -84,9 +82,7 @@ public class AllLocationsFragment extends Fragment {
                         e.printStackTrace();
                         Log.d(TAG, "onResponse: " + e.getMessage());
                     } finally {
-//                        Resources res = getResources();
-                        locationsRV = v.findViewById(R.id.locationsRV);
-                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, getResources().getString(R.string.allLocations));
+                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, getResources().getString(R.string.allLocations), controller);
                         locationsRV.setAdapter(rva);
                         locationsRV.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressIndicator.setVisibility(View.GONE);
@@ -129,5 +125,12 @@ public class AllLocationsFragment extends Fragment {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        controller = Navigation.findNavController(view);
+        Log.d(TAG, "onViewCreated: called" + controller);
     }
 }
