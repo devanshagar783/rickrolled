@@ -73,9 +73,9 @@ public class FamilyTreeFragment extends Fragment {
                         view.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view1) {
-                                CharacterFragment fragment = new CharacterFragment();
-                                fragment.setArguments(bundle);
-                                ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
+//                                CharacterFragment fragment = new CharacterFragment();
+//                                fragment.setArguments(bundle);
+//                                ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
                             }
                         });
                     } catch (JSONException e) {
@@ -93,5 +93,11 @@ public class FamilyTreeFragment extends Fragment {
                 .asBitmap()
                 .load(url)
                 .into(view);
+    }
+
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG, "onDestroyView: called");
+        super.onDestroyView();
     }
 }

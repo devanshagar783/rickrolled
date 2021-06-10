@@ -9,29 +9,78 @@
     <fragment
         android:id = "@+id/infoFragment"
         android:name = "com.example.rickrolled.InfoFragment"
-        android:label = "InfoFragment"
+        android:label = "Home"
+        tools:layout = "@layout/fragment_info"
         >
         <argument
             android:name = "name"
-            app:argType = "string"
             android:defaultValue = "something"
+            app:argType = "string"
             />
     </fragment>
     <fragment
         android:id = "@+id/familyTreeFragment"
         android:name = "com.example.rickrolled.FamilyTreeFragment"
-        android:label = "fragment_family_tree"
+        android:label = "Family Tree"
         tools:layout = "@layout/fragment_family_tree"
         />
     <fragment
         android:id = "@+id/allLocationsFragment"
         android:name = "com.example.rickrolled.AllLocationsFragment"
-        android:label = "fragment_all_locations"
+        android:label = "All Locations"
         tools:layout = "@layout/fragment_all_locations"
         />
     <fragment
         android:id = "@+id/allCharactersFragment"
         android:name = "com.example.rickrolled.AllCharactersFragment"
-        android:label = "AllCharactersFragment"
-        />
+        android:label = "All Characters"
+        tools:layout = "@layout/fragment_all_characters"
+        >
+        <action
+            android:id = "@+id/action_allCharactersFragment_to_characterFragment"
+            app:destination = "@id/characterFragment"
+            />
+    </fragment>
+    <fragment
+        android:id = "@+id/characterFragment"
+        android:name = "com.example.rickrolled.CharacterFragment"
+        android:label = "fragment_character"
+        tools:layout = "@layout/fragment_character"
+        >
+        <argument
+            android:name = "name"
+            android:defaultValue = "name"
+            app:argType = "string"
+            />
+        <argument
+            android:name = "gender"
+            android:defaultValue = "gender"
+            app:argType = "string"
+            />
+        <argument
+            android:name = "species"
+            android:defaultValue = "species"
+            app:argType = "string"
+            />
+        <argument
+            android:name = "status"
+            android:defaultValue = "status"
+            app:argType = "string"
+            />
+        <argument
+            android:name = "origin"
+            android:defaultValue = "origin"
+            app:argType = "string"
+            />
+        <argument
+            android:name = "location"
+            android:defaultValue = "location"
+            app:argType = "string"
+            />
+        <argument
+            android:name = "image"
+            android:defaultValue = "image"
+            app:argType = "string"
+            />
+    </fragment>
 </navigation>

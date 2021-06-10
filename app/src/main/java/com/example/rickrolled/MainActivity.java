@@ -43,15 +43,11 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private Fragment fragment;
-    private NavHostFragment navHostFragment;
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
-    private NavController.OnDestinationChangedListener listener;
 
-    private int flag=0;
+    private int flag = 0;
     JSONObject jsonObject;
-    JSONArray jsonArray;
     int random, count;
 
     @Override
@@ -65,36 +61,14 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.hometoolbar);
         setSupportActionBar(toolbar);
 
-//        Log.d(TAG, "onCreate: going to json");
         getjson();
-//        Log.d(TAG, "onCreate: return from json");
-//        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
-//        assert navHostFragment != null;
-//        navController = navHostFragment.getNavController();
-//        Log.d(TAG, "onCreate: "+navController.getGraph());
-//        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).setOpenableLayout(drawerLayout).build();
-
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.infoFragment,R.id.family_tree, R.id.allCharactersFragment, R.id.allLocationsFragment)
+                R.id.infoFragment, R.id.familyTreeFragment, R.id.allCharactersFragment, R.id.allLocationsFragment)
                 .setDrawerLayout(drawerLayout)
                 .build();
-        navController =Navigation.findNavController(this, R.id.fragment);
-//        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-//                this,
-//                drawerLayout,
-//                toolbar,
-//                R.string.draweropen,
-//                R.string.drawerclose
-//        );
-
+        navController = Navigation.findNavController(this, R.id.fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-
-//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-//        actionBarDrawerToggle.syncState();
-//        navigationView.setNavigationItemSelectedListener(this);
-
     }
 
     @Override
@@ -115,14 +89,12 @@ public class MainActivity extends AppCompatActivity {
 
                             Random rand = new Random();
                             random = rand.nextInt(count);
-                            Log.d(TAG, "onResponse: json 1st");
                             StringRequest stringRequest = new StringRequest(Request.Method.GET, CHAR_URL + "/" + String.valueOf(random),
                                     new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
                                             try {
                                                 JSONObject object = new JSONObject(response);
-                                                Log.d(TAG, "onResponse: json 2");
                                                 Bundle bundle = new Bundle();
                                                 bundle.putString("name", object.getString("name"));
                                                 bundle.putString("gender", object.getString("gender"));
@@ -132,11 +104,6 @@ public class MainActivity extends AppCompatActivity {
                                                 bundle.putString("location", object.getJSONObject("location").getString("name"));
                                                 bundle.putString("image", object.getString("image"));
                                                 navController.setGraph(R.navigation.drawer_nav, bundle);
-                                                Log.d(TAG, "onResponse: inside json");
-//                                                fragment = new InfoFragment();
-//                                                fragment.setArguments(bundle);
-//                                                progressBar.setVisibility(View.GONE);
-//                                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("Home Fragment").commit();
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -162,10 +129,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            startActivity(new Intent(this, EndSplash.class));
-            finish();
-        }
+//        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+//            startActivity(new Intent(this, EndSplash.class));
+//            finish();
+//        }
     }
 
 //    @Override

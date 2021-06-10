@@ -5,7 +5,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +46,7 @@ public class AllCharactersFragment extends Fragment {
     ImageView sparkyHome;
     LinearProgressIndicator progressIndicator;
     private String CHAR_URL = "https://rickandmortyapi.com/api/character";
+    NavController controller;
 
     public AllCharactersFragment() {
         // Required empty public constructor
@@ -95,7 +98,7 @@ public class AllCharactersFragment extends Fragment {
                     } finally {
                         Resources res = getResources();
                         charView = v.findViewById(R.id.charView);
-                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, res.getString(R.string.allCharacters));
+                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, res.getString(R.string.allCharacters), controller);
                         charView.setAdapter(rva);
                         charView.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressIndicator.setVisibility(View.GONE);
@@ -139,12 +142,10 @@ public class AllCharactersFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
     }
-//
-//    @Override
-//    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.home_menu, menu);
-//        //TODO - action bar not working
-//        Log.d(TAG, "onCreateOptionsMenu: " + menu);
-//    }
+
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        controller = Navigation.findNavController(view);
+    }
 }
