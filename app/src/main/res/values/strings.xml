@@ -13,7 +13,7 @@
     <string name = "charname">What up? I am %1$s.</string>
     <string name = "chargender">I am a %1$s.</string>
     <string name = "charlocation">If you’re ever in %1$s, hit me up! ;)</string>
-    <string name = "locationname">name: %1$s</string>
+    <string name = "locationname">Name: %1$s</string>
     <string name = "locationtype">Type: %1$s</string>
     <string name = "locationdimension">Dimension: %1$s</string>
     <string name = "chardoa">I am %1$s!!</string>

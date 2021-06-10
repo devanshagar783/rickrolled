@@ -1,24 +1,15 @@
 package com.example.rickrolled;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -29,7 +20,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,19 +30,15 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private final String CHAR_URL = "https://rickandmortyapi.com/api/character";
 
-//    private ProgressBar progressBar;
+    private ProgressBar progressBar;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-// <<<<<<< main
-    private Fragment fragment;
     private TextView randomQuotes;
-    private String [] quotes;
-// =======
+    private String[] quotes;
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
-// >>>>>>> navigationBranch
 
     private int flag = 0;
     JSONObject jsonObject;
@@ -63,35 +49,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        progressBar = findViewById(R.id.progresshome);
+        progressBar = findViewById(R.id.progresshome);
         drawerLayout = findViewById(R.id.drawerlayout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.hometoolbar);
-// <<<<<<< main
+        setSupportActionBar(toolbar);
         randomQuotes = findViewById(R.id.randomQuote);
         quotes = getResources().getStringArray(R.array.menuQuotes);
 
         int randomIndex = new Random().nextInt(quotes.length);
         randomQuotes.setText(quotes[randomIndex]);
 
-//         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-//                 this,
-//                 drawerLayout,
-//                 toolbar,
-//                 R.string.draweropen,
-//                 R.string.drawerclose
-//         );
-
-//         drawerLayout.setDrawerListener(actionBarDrawerToggle);
-//         actionBarDrawerToggle.syncState();
-//         navigationView.setNavigationItemSelectedListener(this);
-// =======
-        setSupportActionBar(toolbar);
-// >>>>>>> navigationBranch
-
         getjson();
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.infoFragment, R.id.familyTreeFragment, R.id.allCharactersFragment, R.id.allLocationsFragment)
+                R.id.infoFragment, R.id.familyTreeFragment, R.id.allCharactersFragment, R.id.allLocationsFragment, R.id.allEpisodesFragment)
                 .setDrawerLayout(drawerLayout)
                 .build();
         navController = Navigation.findNavController(this, R.id.fragment);
@@ -162,50 +133,4 @@ public class MainActivity extends AppCompatActivity {
 //            finish();
 //        }
     }
-
-// <<<<<<< main
-//     @Override
-//     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//         switch (item.getItemId()) {
-//             case R.id.all_characters:
-//                 fragment = new AllCharactersFragment();
-//                 break;
-
-//             case R.id.all_locations:
-//                 fragment = new AllLocationsFragment();
-//                 break;
-
-//             case R.id.all_episodes:
-//                 fragment = new AllEpisodesFragment();
-//                 break;
-
-//             case R.id.family:
-//                 fragment = new FamilyTreeFragment();
-//                 break;
-//         }
-//         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("All Character Fragment").commit();
-//         drawerLayout.closeDrawers();
-//         return true;
-//     }
-// =======
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-////            case R.id.all_characters:
-////                fragment = new AllCharactersFragment();
-////                break;
-////
-////            case R.id.all_locations:
-////                fragment = new AllLocationsFragment();
-////                break;
-////
-////            case R.id.family:
-////                fragment = new FamilyTreeFragment();
-////                break;
-//        }
-////        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("All Character Fragment").commit();
-//        drawerLayout.closeDrawers();
-//        return true;
-//    }
-// >>>>>>> navigationBranch
 }

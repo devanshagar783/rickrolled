@@ -3,9 +3,7 @@ package com.example.rickrolled;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +11,6 @@ import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -41,7 +37,6 @@ public class FamilyTreeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: called");
         v = inflater.inflate(R.layout.fragment_family_tree, container, false);
         rick = v.findViewById(R.id.rickimg);
         beth = v.findViewById(R.id.bethimage);
@@ -93,11 +88,5 @@ public class FamilyTreeFragment extends Fragment {
                 .asBitmap()
                 .load(url)
                 .into(view);
-    }
-
-    @Override
-    public void onDestroyView() {
-        Log.d(TAG, "onDestroyView: called");
-        super.onDestroyView();
     }
 }
