@@ -8,12 +8,12 @@
     <string name = "str_next">Next</string>
     <string name = "next">Next</string>
     <string name = "prev">Prev</string>
-    <string name = "drawerclose">Close</string>
+    <string name = "drawerclose" >close</string>
     <string name = "draweropen">Open</string>
     <string name = "charname">What up? I am %1$s.</string>
     <string name = "chargender">I am a %1$s.</string>
     <string name = "charlocation">If you’re ever in %1$s, hit me up! ;)</string>
-    <string name = "locationname">Name: %1$s</string>
+    <string name = "locationname">name: %1$s</string>
     <string name = "locationtype">Type: %1$s</string>
     <string name = "locationdimension">Dimension: %1$s</string>
     <string name = "chardoa">I am %1$s!!</string>
@@ -22,6 +22,24 @@
     <string name = "allLocations">ALL_LOCATIONS</string>
     <string name = "allEpisodes">ALL_EPISODES</string>
     <string name = "allResidents">ALL_RESIDENTS</string>
-    
+    <string name="oneEpisode">ONE_EPISODE</string>
+  
     <string name = "LOCATION_URL">https://rickandmortyapi.com/api/location</string>
+
+    <string-array name="menuQuotes">
+        <item>"What, so everyone’s supposed to sleep every single night now?"</item>
+        <item>"What People Call Love Is Just A Chemical Reaction"</item>
+        <item>"Meeting Them Head-On, Charging Into 'Em Like A Bull - That's How We Grow As People"</item>
+        <item>"Weddings Are Basically Funerals With A Cake"</item>
+        <item>"I Always Slay It, Queen"</item>
+        <item>"Welcome To The Club, Pal"</item>
+        <item>"I'm A Scientist; Because I Invent"</item>
+        <item>"Honey, stop raising your father's cholesterol so you can take a hot funeral selfie"</item>
+        <item>"Get Out Of Here, Summer! You Ruined The Season 4 Premiere!"</item>
+        <item>"Sometimes Science Is More Art Than Science, Morty"</item>
+        <item>"This One's Not Directed By Ron Howard"</item>
+        <item>"Wubba Lubba Dub Dub!"</item>
+        <item>"The Universe Is Basically An Animal"</item>
+        <item>"To Live Is To Risk It All"</item>
+    </string-array>
 </resources>
