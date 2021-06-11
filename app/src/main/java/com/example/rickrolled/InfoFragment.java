@@ -27,16 +27,6 @@ public class InfoFragment extends Fragment {
     public InfoFragment() {
         // Required empty public constructor
     }
-//
-//    public InfoFragment(String name, String gender, String species, String status, String origin, String lastknown, String img){
-//        this.name.setText(name);
-//        this.gender.setText(gender);
-//        this.species.setText(species);
-//        this.status.setText(status);
-//        this.origin.setText(origin);
-//        this.lastknown.setText(lastknown);
-//        this.img = img;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,8 +38,6 @@ public class InfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_info, container, false);
-
-        Resources resources = getResources();
         progressBar = v.findViewById(R.id.progresshome);
         TextView name = v.findViewById(R.id.charname);
         TextView name2 = v.findViewById(R.id.charname2);
@@ -57,31 +45,23 @@ public class InfoFragment extends Fragment {
         TextView location = v.findViewById(R.id.charlocation);
         ImageView view = v.findViewById(R.id.charimage);
         Button btn = v.findViewById(R.id.rickroll);
-        Log.d(TAG, "onCreateView: Info Fragment open");
         if(getArguments().getString("gender") == null)
             v.findViewById(R.id.main_layout).setVisibility(View.GONE);
 
         assert getArguments() != null;
         name.setText(getArguments().getString("name"));
-        name2.setText(String.format(resources.getString(R.string.charname), getArguments().getString("name")));
-        gender.setText(String.format(resources.getString(R.string.chargender), getArguments().getString("gender")));
-        location.setText(String.format(resources.getString(R.string.charlocation), getArguments().getString("location")));
-
+        name2.setText(String.format(getResources().getString(R.string.charname), getArguments().getString("name")));
+        gender.setText(String.format(getResources().getString(R.string.chargender), getArguments().getString("gender")));
+        location.setText(String.format(getResources().getString(R.string.charlocation), getArguments().getString("location")));
         progressBar.setVisibility(View.GONE);
         v.findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
-
 
         Glide.with(getActivity().getApplicationContext())
                 .asBitmap()
                 .load(getArguments().getString("image"))
                 .into(view);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), RickrollMe.class));
-            }
-        });
+        btn.setOnClickListener(v1 -> startActivity(new Intent(getContext(), RickrollMe.class)));
 
         return v;
     }

@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -40,7 +40,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     String imgURL;
     List<Map.Entry<String, List<EpisodeData>>> newList;
     List<EpisodeData> episodes;
-    NavController controller;
 
     private static final String TAG = "RVAdapter";
 
@@ -60,13 +59,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
         this.adapterType = adapterType;
         this.episodes = episodes;
-    }
-
-    public RVAdapter(Context context, JSONArray data, String adapterType, NavController controller) {
-        this.context = context;
-        this.data = data;
-        this.adapterType = adapterType;
-        this.controller = controller;
     }
 
     @NonNull
@@ -126,7 +118,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             action.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
                             action.setLocation(charsIndi.getJSONObject("location").getString("name"));
                             action.setImage(charsIndi.getString("image"));
-                            controller.navigate(action);
+                            Navigation.findNavController(view).navigate(action);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -148,7 +140,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             action.setType(locIndi.getString("type"));
                             action.setDimension(locIndi.getString("dimension"));
                             action.setResidents(locIndi.getJSONArray("residents").toString());
-                            controller.navigate(action);
+                            Navigation.findNavController(view).navigate(action);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -221,7 +213,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             action.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
                             action.setLocation(charsIndi.getJSONObject("location").getString("name"));
                             action.setImage(charsIndi.getString("image"));
-                            controller.navigate(action);
+                            Navigation.findNavController(view).navigate(action);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -232,7 +224,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
         }
     }
-
     @Override
     public int getItemCount() {
         if (newList != null)
@@ -260,6 +251,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class AllLocationsHolder extends RecyclerView.ViewHolder {
+
         TextView planetName;
 
         public AllLocationsHolder(@NonNull View itemView) {
@@ -269,7 +261,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class AllResidentsHolder extends RecyclerView.ViewHolder {
-        //        TextView residentName;
+
         ImageView residentImage;
 
         public AllResidentsHolder(@NonNull View itemView) {
