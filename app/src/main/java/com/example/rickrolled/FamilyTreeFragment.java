@@ -3,7 +3,6 @@ package com.example.rickrolled;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -23,6 +20,7 @@ import org.json.JSONObject;
 
 public class FamilyTreeFragment extends Fragment {
 
+    private static final String TAG = "FamilyTreeFragment";
     private static final String INDICHAR_URL = "https://rickandmortyapi.com/api/character/";
     private View v;
     private ImageView rick, beth, jerry, morty, summer;
@@ -70,9 +68,9 @@ public class FamilyTreeFragment extends Fragment {
                         view.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view1) {
-                                CharacterFragment fragment = new CharacterFragment();
-                                fragment.setArguments(bundle);
-                                ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
+//                                CharacterFragment fragment = new CharacterFragment();
+//                                fragment.setArguments(bundle);
+//                                ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
                             }
                         });
                     } catch (JSONException e) {

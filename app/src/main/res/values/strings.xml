@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Rick Rolled</string>
     <string name="last_seen">Last seen:</string>
     <string name="doctor_what">Doctor what</string>
@@ -43,6 +44,4 @@
         <item>"The Universe Is Basically An Animal"</item>
         <item>"To Live Is To Risk It All"</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

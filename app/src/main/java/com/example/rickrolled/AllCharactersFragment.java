@@ -1,18 +1,18 @@
 package com.example.rickrolled;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -43,6 +43,7 @@ public class AllCharactersFragment extends Fragment {
     ImageView sparkyHome;
     LinearProgressIndicator progressIndicator;
     private String CHAR_URL = "https://rickandmortyapi.com/api/character";
+    NavController controller;
 
     public AllCharactersFragment() {
         // Required empty public constructor
@@ -51,7 +52,6 @@ public class AllCharactersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -90,9 +90,8 @@ public class AllCharactersFragment extends Fragment {
                         e.printStackTrace();
                         Log.d(TAG, "onResponse: " + e.getMessage());
                     } finally {
-                        Resources res = getResources();
                         charView = v.findViewById(R.id.charView);
-                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, res.getString(R.string.allCharacters));
+                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, getResources().getString(R.string.allCharacters), controller);
                         charView.setAdapter(rva);
                         charView.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressIndicator.setVisibility(View.GONE);
@@ -138,10 +137,9 @@ public class AllCharactersFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.home_menu, menu);
-        //TODO - action bar not working
-        Log.d(TAG, "onCreateOptionsMenu: " + menu);
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        controller = Navigation.findNavController(view);
+        Log.d(TAG, "onViewCreated: called" + controller);
     }
 }

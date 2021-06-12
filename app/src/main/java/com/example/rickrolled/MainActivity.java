@@ -1,18 +1,15 @@
 package com.example.rickrolled;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,28 +20,28 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private final String CHAR_URL = "https://rickandmortyapi.com/api/character";
 
-    private ProgressBar bar;
+    private ProgressBar progressBar;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private Fragment fragment;
     private TextView randomQuotes;
-    private String [] quotes;
+    private String[] quotes;
+    private NavController navController;
+    private AppBarConfiguration appBarConfiguration;
 
+    private int flag = 0;
     JSONObject jsonObject;
-    JSONArray jsonArray;
     int random, count;
 
     @Override
@@ -52,29 +49,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bar = findViewById(R.id.progresshome);
+        progressBar = findViewById(R.id.progresshome);
         drawerLayout = findViewById(R.id.drawerlayout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.hometoolbar);
+        setSupportActionBar(toolbar);
         randomQuotes = findViewById(R.id.randomQuote);
         quotes = getResources().getStringArray(R.array.menuQuotes);
 
         int randomIndex = new Random().nextInt(quotes.length);
         randomQuotes.setText(quotes[randomIndex]);
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                toolbar,
-                R.string.draweropen,
-                R.string.drawerclose
-        );
-
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
         getjson();
+        appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.infoFragment, R.id.familyTreeFragment, R.id.allCharactersFragment, R.id.allLocationsFragment, R.id.allEpisodesFragment)
+                .setDrawerLayout(drawerLayout)
+                .build();
+        navController = Navigation.findNavController(this, R.id.fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.fragment);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 
     public void getjson() {
@@ -102,10 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                                 bundle.putString("origin", object.getJSONObject("origin").getString("name"));
                                                 bundle.putString("location", object.getJSONObject("location").getString("name"));
                                                 bundle.putString("image", object.getString("image"));
-                                                fragment = new InfoFragment();
-                                                fragment.setArguments(bundle);
-                                                bar.setVisibility(View.GONE);
-                                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("Home Fragment").commit();
+                                                navController.setGraph(R.navigation.drawer_nav, bundle);
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -131,33 +128,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            startActivity(new Intent(this, EndSplash.class));
-            finish();
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.all_characters:
-                fragment = new AllCharactersFragment();
-                break;
-
-            case R.id.all_locations:
-                fragment = new AllLocationsFragment();
-                break;
-
-            case R.id.all_episodes:
-                fragment = new AllEpisodesFragment();
-                break;
-
-            case R.id.family:
-                fragment = new FamilyTreeFragment();
-                break;
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("All Character Fragment").commit();
-        drawerLayout.closeDrawers();
-        return true;
+//        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+//            startActivity(new Intent(this, EndSplash.class));
+//            finish();
+//        }
     }
 }
