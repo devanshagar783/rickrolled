@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private final String CHAR_URL = "https://rickandmortyapi.com/api/character";
@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
 
         getjson();
     }
@@ -122,36 +121,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            startActivity(new Intent(this, EndSplash.class));
-            finish();
-        }
+//        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+//            startActivity(new Intent(this, EndSplash.class));
+//            finish();
+//        }
     }
+//
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.all_characters:
+//                fragment = new AllCharactersFragment();
+//                break;
+//
+//            case R.id.all_locations:
+//                fragment = new AllLocationsFragment();
+//                break;
+//
+//            case R.id.all_episodes:
+//                fragment = new AllEpisodesFragment();
+//                break;
+//
+//            case R.id.favourite:
+//                fragment = new FavouriteEpisodesFragment();
+//
+//            case R.id.family:
+//                fragment = new FamilyTreeFragment();
+//                break;
+//        }
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("All Character Fragment").commit();
+//        drawerLayout.closeDrawers();
+//        return true;
+//    }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.all_characters:
-                fragment = new AllCharactersFragment();
-                break;
-
-            case R.id.all_locations:
-                fragment = new AllLocationsFragment();
-                break;
-
-            case R.id.all_episodes:
-                fragment = new AllEpisodesFragment();
-                break;
-
-            case R.id.favourite:
-                fragment = new FavouriteEpisodesFragment();
-
-            case R.id.family:
-                fragment = new FamilyTreeFragment();
-                break;
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("All Character Fragment").commit();
-        drawerLayout.closeDrawers();
-        return true;
-    }
 }
