@@ -130,4 +130,10 @@
             android:defaultValue="residents"
             />
     </fragment>
+    <fragment
+        android:id = "@+id/favouriteEpisodesFragment"
+        android:name = "com.example.rickrolled.FavouriteEpisodesFragment"
+        android:label = "Favourite Episodes"
+        tools:layout = "@layout/fragment_favourite_episodes"
+        />
 </navigation>
