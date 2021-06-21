@@ -3,11 +3,7 @@ package com.example.rickrolled;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +22,6 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +38,6 @@ public class AllCharactersFragment extends Fragment {
     ImageView sparkyHome;
     LinearProgressIndicator progressIndicator;
     private String CHAR_URL = "https://rickandmortyapi.com/api/character";
-    NavController controller;
 
     public AllCharactersFragment() {
         // Required empty public constructor
@@ -91,7 +85,7 @@ public class AllCharactersFragment extends Fragment {
                         Log.d(TAG, "onResponse: " + e.getMessage());
                     } finally {
                         charView = v.findViewById(R.id.charView);
-                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, getResources().getString(R.string.allCharacters), controller);
+                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, getResources().getString(R.string.allCharacters));
                         charView.setAdapter(rva);
                         charView.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressIndicator.setVisibility(View.GONE);
@@ -116,7 +110,6 @@ public class AllCharactersFragment extends Fragment {
                                 try {
                                     progressIndicator.setVisibility(View.VISIBLE);
                                     CHAR_URL = jsonObject.getJSONObject("info").getString("prev");
-                                    Log.d(TAG, "onClick: 123" + CHAR_URL);
                                     if (!CHAR_URL.equals("null")) {
                                         getjson();
                                     } else {
@@ -134,12 +127,5 @@ public class AllCharactersFragment extends Fragment {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        controller = Navigation.findNavController(view);
-        Log.d(TAG, "onViewCreated: called" + controller);
     }
 }

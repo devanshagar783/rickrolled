@@ -3,6 +3,7 @@ package com.example.rickrolled;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,20 +58,19 @@ public class FamilyTreeFragment extends Fragment {
                     try {
                         JSONObject object = new JSONObject(response);
                         setimg(object.getString("image"), view);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("name", object.getString("name"));
-                        bundle.putString("gender", object.getString("gender"));
-                        bundle.putString("species", object.getString("species"));
-                        bundle.putString("status", object.getString("status"));
-                        bundle.putString("origin", object.getJSONObject("origin").getString("name"));
-                        bundle.putString("location", object.getJSONObject("location").getString("name"));
-                        bundle.putString("image", object.getString("image"));
-                        view.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view1) {
-//                                CharacterFragment fragment = new CharacterFragment();
-//                                fragment.setArguments(bundle);
-//                                ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).addToBackStack("New Fragment").commit();
+                        view.setOnClickListener(view1 -> {
+                            FamilyTreeFragmentDirections.ActionFamilyTreeFragmentToCharacterFragment action = FamilyTreeFragmentDirections.actionFamilyTreeFragmentToCharacterFragment();
+                            try {
+                                action.setName(object.getString("name"));
+                                action.setGender(object.getString("gender"));
+                                action.setSpecies(object.getString("species"));
+                                action.setStatus(object.getString("status"));
+                                action.setOrigin(object.getJSONObject("origin").getString("name"));
+                                action.setLocation(object.getJSONObject("location").getString("name"));
+                                action.setImage(object.getString("image"));
+                                Navigation.findNavController(view1).navigate(action);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         });
                     } catch (JSONException e) {
