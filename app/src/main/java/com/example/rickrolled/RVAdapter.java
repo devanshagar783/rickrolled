@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,13 +62,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
         this.adapterType = adapterType;
         this.episodes = episodes;
-    }
-
-    public RVAdapter(Context context, JSONArray data, String adapterType, NavController controller) {
-        this.context = context;
-        this.data = data;
-        this.adapterType = adapterType;
-        this.controller = controller;
     }
 
     public RVAdapter(Context context, String adapterType, List<String> characters, NavController controller) {
