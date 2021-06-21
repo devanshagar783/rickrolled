@@ -98,7 +98,12 @@
         android:name = "com.example.rickrolled.AllEpisodesFragment"
         android:label = "fragment_all_episodes"
         tools:layout = "@layout/fragment_all_episodes"
-        />
+        >
+        <action
+            android:id = "@+id/action_allEpisodesFragment_to_episodeFragment"
+            app:destination = "@id/episodeFragment"
+            />
+    </fragment>
     <fragment
         android:id = "@+id/locationInfo"
         android:name = "com.example.rickrolled.LocationInfo"
@@ -111,23 +116,34 @@
             />
         <argument
             android:name = "name"
+            android:defaultValue = "name"
             app:argType = "string"
-            android:defaultValue="name"
             />
         <argument
             android:name = "type"
+            android:defaultValue = "type"
             app:argType = "string"
-            android:defaultValue="type"
             />
         <argument
             android:name = "dimension"
+            android:defaultValue = "dimension"
             app:argType = "string"
-            android:defaultValue="dimension"
             />
         <argument
             android:name = "residents"
+            android:defaultValue = "residents"
             app:argType = "string"
-            android:defaultValue="residents"
+            />
+    </fragment>
+    <fragment
+        android:id = "@+id/episodeFragment"
+        android:name = "com.example.rickrolled.EpisodeFragment"
+        android:label = "fragment_episode"
+        tools:layout = "@layout/fragment_episode"
+        >
+        <argument
+            android:name = "epData"
+            app:argType = "com.example.rickrolled.EpisodeData"
             />
     </fragment>
 </navigation>

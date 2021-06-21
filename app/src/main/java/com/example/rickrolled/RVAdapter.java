@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
@@ -185,6 +186,10 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case "ONE_EPISODE":
                 OneEpisodeHolder OEH = (OneEpisodeHolder) holder;
                 OEH.name.setText(episodes.get(position).getName());
+                OEH.itemView.setOnClickListener(v -> {
+                    AllEpisodesFragmentDirections.ActionAllEpisodesFragmentToEpisodeFragment action = AllEpisodesFragmentDirections.actionAllEpisodesFragmentToEpisodeFragment(episodes.get(position));
+                    Navigation.findNavController(v).navigate(action);
+                });
                 break;
 
             case "ALL_RESIDENTS":

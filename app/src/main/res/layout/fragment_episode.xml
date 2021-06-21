@@ -1,95 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".EpisodeFragment"
-    android:padding="15dp">
-
+<FrameLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    android:layout_width = "match_parent"
+    android:layout_height = "match_parent"
+    android:padding = "15dp"
+    tools:context = ".EpisodeFragment"
+    >
+    
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        >
+        
         <TextView
-            android:id="@+id/SxxEyy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="50dp"
-            android:text="SxxEyy"
-            android:textStyle="bold"
-            android:textSize="22sp"
+            android:id = "@+id/episode_number"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "50dp"
+            android:text = "SxxEyy"
+            android:textSize = "22sp"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toTopOf = "parent"
             />
-
+        
         <TextView
-            android:id="@+id/episode_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/SxxEyy"
-            android:layout_marginTop="20dp"
-            android:text="episode_name"
-            android:textStyle="bold"
-            android:textSize="24sp"
+            android:id = "@+id/episode_name"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "20dp"
+            android:text = "episode_name"
+            android:textSize = "24sp"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@+id/episode_number"
             />
-
+        
         <TextView
-            android:id="@+id/firstAired"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/episode_name"
-            android:layout_marginTop="20dp"
-            android:text="@string/firstAired"
-            android:textStyle="bold"
-            android:textSize="22sp"
+            android:id = "@+id/firstAired"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "20dp"
+            android:text = "@string/firstAired"
+            android:textSize = "22sp"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@id/episode_name"
             />
-
+        
         <Button
-            android:id="@+id/addToWatchlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/favourite"
-            app:layout_constraintTop_toBottomOf="@id/firstAired"
-            android:layout_marginTop="20dp"
-            android:text="Add to watchlist"/>
-
-        <Button
-            android:id="@+id/favourite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/addToWatchlist"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/firstAired"
-            android:layout_marginTop="20dp"
-            android:text="Add to watchlist"/>
-
-        <TextView
-            android:id="@+id/cast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/castRV"
-            android:text="Cast"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"
-            android:textSize="20dp"
+            android:id = "@+id/addToWatchlist"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "20dp"
+            android:text = "Add to watchlist"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@id/firstAired"
             />
-
+        
+        <TextView
+            android:id = "@+id/cast"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginBottom = "20dp"
+            android:text = "Cast"
+            android:textSize = "20dp"
+            android:textStyle = "bold"
+            app:layout_constraintBottom_toTopOf = "@id/castRV"
+            app:layout_constraintStart_toStartOf = "parent"
+            />
+        
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/castRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
+            android:id = "@+id/castRV"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "10dp"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            />
+    
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

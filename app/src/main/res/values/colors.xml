@@ -7,7 +7,9 @@
     <color name = "teal_700">#FF018786</color>
     <color name = "black">#FF000000</color>
     <color name = "white">#FFFFFFFF</color>
-    <color name="rick_morty_green">#97CE4C</color>
-    <color name="coral_orange">#FF8552</color>
+    <color name = "rick_morty_green">#97CE4C</color>
+    <color name = "coral_orange">#FF8552</color>
     <color name = "colorPurple">#983CFF</color>
+    <color name = "gray1">#27271F</color>
+    <color name = "gray2">#51514B</color>
 </resources>
