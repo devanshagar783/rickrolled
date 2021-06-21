@@ -12,8 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -41,6 +42,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<Map.Entry<String, List<EpisodeData>>> newList;
     List<EpisodeData> episodes;
     NavController controller;
+    List<String> characters;
 
     private static final String TAG = "RVAdapter";
 
@@ -62,9 +64,9 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.episodes = episodes;
     }
 
-    public RVAdapter(Context context, JSONArray data, String adapterType, NavController controller) {
+    public RVAdapter(Context context, String adapterType, List<String> characters, NavController controller) {
         this.context = context;
-        this.data = data;
+        this.characters = characters;
         this.adapterType = adapterType;
         this.controller = controller;
     }
@@ -126,7 +128,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             action.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
                             action.setLocation(charsIndi.getJSONObject("location").getString("name"));
                             action.setImage(charsIndi.getString("image"));
-                            controller.navigate(action);
+                            Navigation.findNavController(view).navigate(action);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -148,7 +150,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             action.setType(locIndi.getString("type"));
                             action.setDimension(locIndi.getString("dimension"));
                             action.setResidents(locIndi.getJSONArray("residents").toString());
-                            controller.navigate(action);
+                            Navigation.findNavController(view).navigate(action);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -185,17 +187,27 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case "ONE_EPISODE":
                 OneEpisodeHolder OEH = (OneEpisodeHolder) holder;
                 OEH.name.setText(episodes.get(position).getName());
+                OEH.itemView.setOnClickListener(v -> {
+                    AllEpisodesFragmentDirections.ActionAllEpisodesFragmentToEpisodeFragment action = AllEpisodesFragmentDirections.actionAllEpisodesFragmentToEpisodeFragment(episodes.get(position));
+                    Navigation.findNavController(v).navigate(action);
+                });
                 break;
 
             case "ALL_RESIDENTS":
                 AllResidentsHolder ARH = (AllResidentsHolder) holder;
                 try {
-                    String residentURL = data.getString(position);
+                    String residentURL = "";
+                    if (data != null)
+                        residentURL = data.getString(position);
+                    if (characters.size() > 0)
+                        residentURL = characters.get(position);
+//                    Log.d(TAG, "onBindViewHolder: called" + residentURL);
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, residentURL,
                             response -> {
                                 try {
                                     charsIndi = new JSONObject(response);
                                     imgURL = charsIndi.getString("image");
+                                    Log.d(TAG, "onBindViewHolder: called" + imgURL);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     Log.d(TAG, "onResponse: " + e.getMessage());
@@ -221,7 +233,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             action.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
                             action.setLocation(charsIndi.getJSONObject("location").getString("name"));
                             action.setImage(charsIndi.getString("image"));
-                            controller.navigate(action);
+                            Navigation.findNavController(view).navigate(action);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -239,6 +251,8 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return newList.size();
         if (episodes != null)
             return episodes.size();
+        if (characters != null)
+            return characters.size();
         return data.length();
     }
 
@@ -260,6 +274,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class AllLocationsHolder extends RecyclerView.ViewHolder {
+
         TextView planetName;
 
         public AllLocationsHolder(@NonNull View itemView) {
@@ -269,7 +284,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class AllResidentsHolder extends RecyclerView.ViewHolder {
-        //        TextView residentName;
+
         ImageView residentImage;
 
         public AllResidentsHolder(@NonNull View itemView) {

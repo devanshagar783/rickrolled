@@ -54,7 +54,7 @@
     <fragment
         android:id = "@+id/characterFragment"
         android:name = "com.example.rickrolled.CharacterFragment"
-        android:label = "fragment_character"
+        android:label = "Character Data"
         tools:layout = "@layout/fragment_character"
         >
         <argument
@@ -96,13 +96,18 @@
     <fragment
         android:id = "@+id/allEpisodesFragment"
         android:name = "com.example.rickrolled.AllEpisodesFragment"
-        android:label = "fragment_all_episodes"
+        android:label = "All Episodes"
         tools:layout = "@layout/fragment_all_episodes"
-        />
+        >
+        <action
+            android:id = "@+id/action_allEpisodesFragment_to_episodeFragment"
+            app:destination = "@id/episodeFragment"
+            />
+    </fragment>
     <fragment
         android:id = "@+id/locationInfo"
         android:name = "com.example.rickrolled.LocationInfo"
-        android:label = "fragment_location_info"
+        android:label = "Location Data"
         tools:layout = "@layout/fragment_location_info"
         >
         <action
@@ -111,23 +116,38 @@
             />
         <argument
             android:name = "name"
+            android:defaultValue = "name"
             app:argType = "string"
-            android:defaultValue="name"
             />
         <argument
             android:name = "type"
+            android:defaultValue = "type"
             app:argType = "string"
-            android:defaultValue="type"
             />
         <argument
             android:name = "dimension"
+            android:defaultValue = "dimension"
             app:argType = "string"
-            android:defaultValue="dimension"
             />
         <argument
             android:name = "residents"
+            android:defaultValue = "residents"
             app:argType = "string"
-            android:defaultValue="residents"
+            />
+    </fragment>
+    <fragment
+        android:id = "@+id/episodeFragment"
+        android:name = "com.example.rickrolled.EpisodeFragment"
+        android:label = "Episode"
+        tools:layout = "@layout/fragment_episode"
+        >
+        <argument
+            android:name = "epData"
+            app:argType = "com.example.rickrolled.EpisodeData"
+            />
+        <action
+            android:id = "@+id/action_episodeFragment_to_characterFragment"
+            app:destination = "@id/characterFragment"
             />
     </fragment>
     <fragment

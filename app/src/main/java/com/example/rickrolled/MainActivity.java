@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
@@ -84,44 +83,36 @@ public class MainActivity extends AppCompatActivity {
 
     public void getjson() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, CHAR_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            jsonObject = new JSONObject(response);
-                            count = Integer.parseInt(jsonObject.getJSONObject("info").getString("count"));
-
-                            Random rand = new Random();
-                            random = rand.nextInt(count) + 1;
-                            StringRequest stringRequest = new StringRequest(Request.Method.GET, CHAR_URL + "/" + String.valueOf(random),
-                                    new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            try {
-                                                JSONObject object = new JSONObject(response);
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString("name", object.getString("name"));
-                                                bundle.putString("gender", object.getString("gender"));
-                                                bundle.putString("species", object.getString("species"));
-                                                bundle.putString("status", object.getString("status"));
-                                                bundle.putString("origin", object.getJSONObject("origin").getString("name"));
-                                                bundle.putString("location", object.getJSONObject("location").getString("name"));
-                                                bundle.putString("image", object.getString("image"));
-                                                navController.setGraph(R.navigation.drawer_nav, bundle);
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    },
-                                    error -> {
-                                    });
-                            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                            queue.add(stringRequest);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.d(TAG, "onResponse: " + e.getMessage());
-                        } finally {
-                        }
+                response -> {
+                    try {
+                        jsonObject = new JSONObject(response);
+                        count = Integer.parseInt(jsonObject.getJSONObject("info").getString("count"));
+                        Random rand = new Random();
+                        random = rand.nextInt(count) + 1;
+                        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, CHAR_URL + "/" + String.valueOf(random),
+                                response1 -> {
+                                    try {
+                                        JSONObject object = new JSONObject(response1);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("name", object.getString("name"));
+                                        bundle.putString("gender", object.getString("gender"));
+                                        bundle.putString("species", object.getString("species"));
+                                        bundle.putString("status", object.getString("status"));
+                                        bundle.putString("origin", object.getJSONObject("origin").getString("name"));
+                                        bundle.putString("location", object.getJSONObject("location").getString("name"));
+                                        bundle.putString("image", object.getString("image"));
+                                        navController.setGraph(R.navigation.drawer_nav, bundle);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                },
+                                error -> {
+                                });
+                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                        queue.add(stringRequest1);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.d(TAG, "onResponse: " + e.getMessage());
                     }
                 },
                 error -> {
