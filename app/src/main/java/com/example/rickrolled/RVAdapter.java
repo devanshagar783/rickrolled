@@ -173,7 +173,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 AEH.episodeNum.setLayoutManager(new LinearLayoutManager(context));
                 Animation arrowAnimShow = AnimationUtils.loadAnimation(context, R.anim.dropdown_arrow);
                 Animation arrowAnimCollapse = AnimationUtils.loadAnimation(context, R.anim.drppdown_arrow_collapse);
-                AEH.dropdown.setOnClickListener(v -> {
+                AEH.itemView.setOnClickListener(v -> {
                     if (AEH.episodeNum.getVisibility() == View.GONE) {
                         AEH.dropdown.startAnimation(arrowAnimShow);
                         AEH.episodeNum.setVisibility(View.VISIBLE);
@@ -201,13 +201,11 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         residentURL = data.getString(position);
                     if (characters.size() > 0)
                         residentURL = characters.get(position);
-//                    Log.d(TAG, "onBindViewHolder: called" + residentURL);
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, residentURL,
                             response -> {
                                 try {
                                     charsIndi = new JSONObject(response);
                                     imgURL = charsIndi.getString("image");
-                                    Log.d(TAG, "onBindViewHolder: called" + imgURL);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     Log.d(TAG, "onResponse: " + e.getMessage());

@@ -6,6 +6,6 @@
     <item android:id="@+id/like_episode"
         android:title="Like"
         app:showAsAction ="always"
-        android:icon="@drawable/arrow_right"/>
-<!--    this icon is temporary-->
+        android:icon="@drawable/fav_icon"/>
+
 </menu>
