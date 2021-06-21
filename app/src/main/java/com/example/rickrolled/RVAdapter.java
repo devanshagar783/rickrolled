@@ -42,6 +42,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<Map.Entry<String, List<EpisodeData>>> newList;
     List<EpisodeData> episodes;
     NavController controller;
+    List<String> characters;
 
     private static final String TAG = "RVAdapter";
 
@@ -66,6 +67,13 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RVAdapter(Context context, JSONArray data, String adapterType, NavController controller) {
         this.context = context;
         this.data = data;
+        this.adapterType = adapterType;
+        this.controller = controller;
+    }
+
+    public RVAdapter(Context context, String adapterType, List<String> characters, NavController controller) {
+        this.context = context;
+        this.characters = characters;
         this.adapterType = adapterType;
         this.controller = controller;
     }
@@ -195,12 +203,18 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case "ALL_RESIDENTS":
                 AllResidentsHolder ARH = (AllResidentsHolder) holder;
                 try {
-                    String residentURL = data.getString(position);
+                    String residentURL = "";
+                    if (data != null)
+                        residentURL = data.getString(position);
+                    if (characters.size() > 0)
+                        residentURL = characters.get(position);
+//                    Log.d(TAG, "onBindViewHolder: called" + residentURL);
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, residentURL,
                             response -> {
                                 try {
                                     charsIndi = new JSONObject(response);
                                     imgURL = charsIndi.getString("image");
+                                    Log.d(TAG, "onBindViewHolder: called" + imgURL);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     Log.d(TAG, "onResponse: " + e.getMessage());
@@ -244,6 +258,8 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return newList.size();
         if (episodes != null)
             return episodes.size();
+        if (characters != null)
+            return characters.size();
         return data.length();
     }
 

@@ -96,7 +96,7 @@
     <fragment
         android:id = "@+id/allEpisodesFragment"
         android:name = "com.example.rickrolled.AllEpisodesFragment"
-        android:label = "fragment_all_episodes"
+        android:label = "All Episodes"
         tools:layout = "@layout/fragment_all_episodes"
         >
         <action
@@ -138,12 +138,16 @@
     <fragment
         android:id = "@+id/episodeFragment"
         android:name = "com.example.rickrolled.EpisodeFragment"
-        android:label = "fragment_episode"
+        android:label = "Episode"
         tools:layout = "@layout/fragment_episode"
         >
         <argument
             android:name = "epData"
             app:argType = "com.example.rickrolled.EpisodeData"
+            />
+        <action
+            android:id = "@+id/action_episodeFragment_to_characterFragment"
+            app:destination = "@id/characterFragment"
             />
     </fragment>
 </navigation>
