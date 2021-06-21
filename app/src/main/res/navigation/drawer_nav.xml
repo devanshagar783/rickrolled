@@ -54,7 +54,7 @@
     <fragment
         android:id = "@+id/characterFragment"
         android:name = "com.example.rickrolled.CharacterFragment"
-        android:label = "fragment_character"
+        android:label = "Character Data"
         tools:layout = "@layout/fragment_character"
         >
         <argument
@@ -107,7 +107,7 @@
     <fragment
         android:id = "@+id/locationInfo"
         android:name = "com.example.rickrolled.LocationInfo"
-        android:label = "fragment_location_info"
+        android:label = "Location Data"
         tools:layout = "@layout/fragment_location_info"
         >
         <action

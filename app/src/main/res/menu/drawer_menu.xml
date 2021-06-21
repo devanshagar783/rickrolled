@@ -16,7 +16,7 @@
         <item android:id="@id/allLocationsFragment"
             android:title="All Locations"/>
     
-        <item android:id="@+id/allEpisodesFragment"
+        <item android:id="@id/allEpisodesFragment"
             android:title="All Episodes"/>
 
         <item android:id="@+id/watching"

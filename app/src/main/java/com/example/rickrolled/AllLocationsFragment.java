@@ -2,11 +2,7 @@ package com.example.rickrolled;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +21,6 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +37,6 @@ public class AllLocationsFragment extends Fragment {
     ImageView sparkyHome;
     private LinearProgressIndicator progressIndicator;
     String LOC_URL = "https://rickandmortyapi.com/api/location";
-    NavController controller;
 
     public AllLocationsFragment() {
         // Required empty public constructor
@@ -77,12 +71,11 @@ public class AllLocationsFragment extends Fragment {
                     try {
                         jsonObject = new JSONObject(response);
                         jsonArray = jsonObject.getJSONArray("results");
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.d(TAG, "onResponse: " + e.getMessage());
                     } finally {
-                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, getResources().getString(R.string.allLocations), controller);
+                        RVAdapter rva = new RVAdapter(getContext(), jsonArray, getResources().getString(R.string.allLocations));
                         locationsRV.setAdapter(rva);
                         locationsRV.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressIndicator.setVisibility(View.GONE);
@@ -125,12 +118,5 @@ public class AllLocationsFragment extends Fragment {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        controller = Navigation.findNavController(view);
-        Log.d(TAG, "onViewCreated: called" + controller);
     }
 }
