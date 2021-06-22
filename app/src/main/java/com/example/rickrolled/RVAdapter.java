@@ -222,18 +222,36 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     requestQueue.add(stringRequest);
 
                     ARH.itemView.setOnClickListener(view -> {
-                        LocationInfoDirections.ActionLocationInfoToCharacterFragment action = LocationInfoDirections.actionLocationInfoToCharacterFragment();
-                        try {
-                            action.setName(charsIndi.getString("name"));
-                            action.setGender(charsIndi.getString("gender"));
-                            action.setSpecies(charsIndi.getString("species"));
-                            action.setStatus(charsIndi.getString("status"));
-                            action.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
-                            action.setLocation(charsIndi.getJSONObject("location").getString("name"));
-                            action.setImage(charsIndi.getString("image"));
-                            Navigation.findNavController(view).navigate(action);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        LocationInfoDirections.ActionLocationInfoToCharacterFragment action = null;
+                        EpisodeFragmentDirections.ActionEpisodeFragmentToCharacterFragment action1 = null;
+                        if (data != null) {
+                            action = LocationInfoDirections.actionLocationInfoToCharacterFragment();
+                            try {
+                                action.setName(charsIndi.getString("name"));
+                                action.setGender(charsIndi.getString("gender"));
+                                action.setSpecies(charsIndi.getString("species"));
+                                action.setStatus(charsIndi.getString("status"));
+                                action.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
+                                action.setLocation(charsIndi.getJSONObject("location").getString("name"));
+                                action.setImage(charsIndi.getString("image"));
+                                Navigation.findNavController(view).navigate(action);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }else{
+                            action1 = EpisodeFragmentDirections.actionEpisodeFragmentToCharacterFragment();
+                            try {
+                                action1.setName(charsIndi.getString("name"));
+                                action1.setGender(charsIndi.getString("gender"));
+                                action1.setSpecies(charsIndi.getString("species"));
+                                action1.setStatus(charsIndi.getString("status"));
+                                action1.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
+                                action1.setLocation(charsIndi.getJSONObject("location").getString("name"));
+                                action1.setImage(charsIndi.getString("image"));
+                                Navigation.findNavController(view).navigate(action1);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 } catch (JSONException e) {

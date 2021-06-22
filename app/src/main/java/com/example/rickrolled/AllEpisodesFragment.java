@@ -31,7 +31,7 @@ public class AllEpisodesFragment extends Fragment {
 
     private static final String TAG = "AllEpisodesFragment";
 
-    public String EPISODES_URL = "https://rickandmortyapi.com/api/episode";
+    public String EPISODES_URL;
     private JSONObject jsonObject;
     private JSONArray jsonArray;
     private LinearProgressIndicator progressIndicator;
@@ -54,6 +54,7 @@ public class AllEpisodesFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_all_episodes, container, false);
         episodesRV = v.findViewById(R.id.seasonView);
         progressIndicator = v.findViewById(R.id.progressbar);
+        EPISODES_URL = "https://rickandmortyapi.com/api/episode";
         getJson();
         return v;
     }
