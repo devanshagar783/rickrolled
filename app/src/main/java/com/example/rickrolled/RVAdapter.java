@@ -233,7 +233,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        }else{
+                        } else {
                             action1 = EpisodeFragmentDirections.actionEpisodeFragmentToCharacterFragment();
                             try {
                                 action1.setName(charsIndi.getString("name"));
@@ -254,9 +254,8 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 break;
             case "FAV_EPISODE":
-                FavEpisodeHolder FEH = (FavEpisodeHolder)holder;
+                FavEpisodeHolder FEH = (FavEpisodeHolder) holder;
                 FEH.name.setText(episodes.get(position).getName());
-                Log.d(TAG, "onBindViewHolder: called" + episodes.get(position));
                 FEH.episode.setText(episodes.get(position).getEpisode());
                 FEH.itemView.setOnClickListener(v -> {
                     FavouriteEpisodesFragmentDirections.ActionFavouriteEpisodesFragmentToEpisodeFragment action = FavouriteEpisodesFragmentDirections.actionFavouriteEpisodesFragmentToEpisodeFragment(episodes.get(position));

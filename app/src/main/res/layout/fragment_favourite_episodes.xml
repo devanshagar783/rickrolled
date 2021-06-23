@@ -10,6 +10,7 @@
         android:id = "@+id/fav_episodes_rev_view"
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
+        android:layout_margin = "8dp"
         android:visibility = "gone"
         />
     
@@ -19,7 +20,7 @@
         android:layout_height = "wrap_content"
         android:layout_centerInParent = "true"
         android:text = "No Episode marked as favourite"
-        android:visibility="gone"
+        android:visibility = "gone"
         />
     
     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -29,5 +30,5 @@
         android:layout_centerInParent = "true"
         android:indeterminate = "true"
         />
-    
+
 </RelativeLayout>

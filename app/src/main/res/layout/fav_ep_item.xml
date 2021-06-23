@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
     android:layout_width = "match_parent"
     android:layout_height = "wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
+    android:layout_margin = "8dp"
+    android:orientation = "vertical"
+    app:cardCornerRadius = "10dp"
     >
     
-    <TextView
+    <LinearLayout
         android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:id="@+id/fav_ep_no"
-        android:textSize="20sp"
-        android:text="S01E01"/>
+        android:layout_height = "match_parent"
+        android:orientation = "vertical"
+        android:padding = "8dp"
+        >
+        
+        <TextView
+            android:id = "@+id/fav_ep_no"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:text = "S01E01"
+            android:textSize = "20sp"
+            />
+        
+        <TextView
+            android:id = "@+id/fav_ep_name"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:text = "Episode Name"
+            android:textSize = "25sp"
+            android:textStyle = "bold"
+            />
     
-    <TextView
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:text="Episode Name"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:id="@+id/fav_ep_name"/>
+    </LinearLayout>
 
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

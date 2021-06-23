@@ -31,15 +31,13 @@ import java.util.List;
 
 public class FavouriteEpisodesFragment extends Fragment {
 
-    private static final String TAG = "FavouriteEpisodesFragme";
+    private static final String TAG = "FavouriteEpisodesFragment";
 
     private FirebaseFirestore db;
-    //    private ArrayList<String> list;
     private TextView textView;
     private CircularProgressIndicator indicator;
     private RecyclerView favRV;
-    private boolean favExist = false;
-    private List<EpisodeData> episodeDataList = new ArrayList<>();
+    private List<EpisodeData> episodeDataList;
 
     public FavouriteEpisodesFragment() {
         // Required empty public constructor
@@ -79,6 +77,7 @@ public class FavouriteEpisodesFragment extends Fragment {
                             indicator.setVisibility(View.GONE);
                             favRV.setVisibility(View.VISIBLE);
                             Log.d(TAG, "onSuccess: called");
+                            episodeDataList = new ArrayList<>();
                             setList(list1);
                         }
                     }
@@ -92,7 +91,6 @@ public class FavouriteEpisodesFragment extends Fragment {
                     response -> {
                         try {
                             JSONObject episodeData = new JSONObject(response);
-                            Log.d(TAG, "setList: called" + episodeData);
                             JSONArray characters = episodeData.getJSONArray("characters");
                             List<String> charName = new ArrayList<>();
                             for (int j = 0; j < characters.length(); ++j) {
@@ -104,11 +102,11 @@ public class FavouriteEpisodesFragment extends Fragment {
                                     episodeData.getString("episode"),
                                     episodeData.getString("url"),
                                     charName));
-                            if (finalI == list.size() - 1) {
+                            if (episodeDataList.size() == list.size()) {
+                                Log.d(TAG, "setList: called" + episodeDataList);
                                 RVAdapter adapter = new RVAdapter(getContext(), getResources().getString(R.string.favEpisode), episodeDataList);
                                 favRV.setLayoutManager(new LinearLayoutManager(getContext()));
                                 favRV.setAdapter(adapter);
-                                Log.d(TAG, "setList: called" + episodeDataList);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
