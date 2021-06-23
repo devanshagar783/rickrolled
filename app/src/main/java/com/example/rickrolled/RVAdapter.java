@@ -1,7 +1,6 @@
 package com.example.rickrolled;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,23 +75,19 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view;
         switch (adapterType) {
             case "ALL_CHARACTERS":
-                view = inflater.inflate(R.layout.char_view, parent, false);
-                return new AllCharactersHolder(view);
+                return new AllCharactersHolder(inflater.inflate(R.layout.char_view, parent, false));
             case "ALL_LOCATIONS":
-                view = inflater.inflate(R.layout.all_location_card, parent, false);
-                return new AllLocationsHolder(view);
+                return new AllLocationsHolder(inflater.inflate(R.layout.all_location_card, parent, false));
             case "ALL_EPISODES":
-                view = inflater.inflate(R.layout.all_ep_card, parent, false);
-                return new AllEpisodesHolder(view);
+                return new AllEpisodesHolder(inflater.inflate(R.layout.all_ep_card, parent, false));
             case "ALL_RESIDENTS":
-                view = inflater.inflate(R.layout.residents_rv_card, parent, false);
-                return new AllResidentsHolder(view);
+                return new AllResidentsHolder(inflater.inflate(R.layout.residents_rv_card, parent, false));
             case "ONE_EPISODE":
-                view = inflater.inflate(R.layout.ep_view, parent, false);
-                return new OneEpisodeHolder(view);
+                return new OneEpisodeHolder(inflater.inflate(R.layout.ep_view, parent, false));
+            case "FAV_EPISODE":
+                return new FavEpisodeHolder(inflater.inflate(R.layout.fav_ep_item, parent, false));
             default:
                 return null;
         }
@@ -99,7 +95,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Resources resources = context.getResources();
         switch (adapterType) {
             case "ALL_CHARACTERS":
                 AllCharactersHolder ACH = (AllCharactersHolder) holder;
@@ -108,7 +103,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     ACH.charname.setText(charsIndi.getString("name"));
                     ACH.chargender.setText(charsIndi.getString("gender"));
                     ACH.charstatus.setText(charsIndi.getString("status"));
-                    ACH.charspecies.setText(String.format(resources.getString(R.string.charSpecies_placeholder), charsIndi.getString("species"), charsIndi.getString("type")));
+                    ACH.charspecies.setText(String.format(context.getResources().getString(R.string.charSpecies_placeholder), charsIndi.getString("species"), charsIndi.getString("type")));
                     ACH.charorigin.setText(charsIndi.getJSONObject("origin").getString("name"));
                     ACH.charlastknown.setText(charsIndi.getJSONObject("location").getString("name"));
 
@@ -258,6 +253,15 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     e.printStackTrace();
                 }
                 break;
+            case "FAV_EPISODE":
+                FavEpisodeHolder FEH = (FavEpisodeHolder)holder;
+                FEH.name.setText(episodes.get(position).getName());
+                Log.d(TAG, "onBindViewHolder: called" + episodes.get(position));
+                FEH.episode.setText(episodes.get(position).getEpisode());
+                FEH.itemView.setOnClickListener(v -> {
+                    FavouriteEpisodesFragmentDirections.ActionFavouriteEpisodesFragmentToEpisodeFragment action = FavouriteEpisodesFragmentDirections.actionFavouriteEpisodesFragmentToEpisodeFragment(episodes.get(position));
+                    Navigation.findNavController(v).navigate(action);
+                });
         }
     }
 
@@ -331,6 +335,19 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public OneEpisodeHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.episode_name);
+        }
+    }
+
+    public static class FavEpisodeHolder extends RecyclerView.ViewHolder {
+
+        TextView name;
+        TextView episode;
+
+
+        public FavEpisodeHolder(@NonNull @NotNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.fav_ep_name);
+            episode = itemView.findViewById(R.id.fav_ep_no);
         }
     }
 }

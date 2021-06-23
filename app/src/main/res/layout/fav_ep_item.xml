@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+    android:layout_width = "match_parent"
+    android:layout_height = "wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    >
+    
+    <TextView
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:id="@+id/fav_ep_no"
+        android:textSize="20sp"
+        android:text="S01E01"/>
+    
+    <TextView
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:text="Episode Name"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:id="@+id/fav_ep_name"/>
+
+</LinearLayout>
