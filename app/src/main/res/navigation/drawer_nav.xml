@@ -150,4 +150,15 @@
             app:destination = "@id/characterFragment"
             />
     </fragment>
+    <fragment
+        android:id = "@+id/favouriteEpisodesFragment"
+        android:name = "com.example.rickrolled.FavouriteEpisodesFragment"
+        android:label = "Favourite Episodes"
+        tools:layout = "@layout/fragment_favourite_episodes"
+        >
+        <action
+            android:id = "@+id/action_favouriteEpisodesFragment_to_episodeFragment"
+            app:destination = "@id/episodeFragment"
+            />
+    </fragment>
 </navigation>

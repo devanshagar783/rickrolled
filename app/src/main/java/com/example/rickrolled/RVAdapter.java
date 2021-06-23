@@ -1,7 +1,6 @@
 package com.example.rickrolled;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,23 +75,19 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view;
         switch (adapterType) {
             case "ALL_CHARACTERS":
-                view = inflater.inflate(R.layout.char_view, parent, false);
-                return new AllCharactersHolder(view);
+                return new AllCharactersHolder(inflater.inflate(R.layout.char_view, parent, false));
             case "ALL_LOCATIONS":
-                view = inflater.inflate(R.layout.all_location_card, parent, false);
-                return new AllLocationsHolder(view);
+                return new AllLocationsHolder(inflater.inflate(R.layout.all_location_card, parent, false));
             case "ALL_EPISODES":
-                view = inflater.inflate(R.layout.all_ep_card, parent, false);
-                return new AllEpisodesHolder(view);
+                return new AllEpisodesHolder(inflater.inflate(R.layout.all_ep_card, parent, false));
             case "ALL_RESIDENTS":
-                view = inflater.inflate(R.layout.residents_rv_card, parent, false);
-                return new AllResidentsHolder(view);
+                return new AllResidentsHolder(inflater.inflate(R.layout.residents_rv_card, parent, false));
             case "ONE_EPISODE":
-                view = inflater.inflate(R.layout.ep_view, parent, false);
-                return new OneEpisodeHolder(view);
+                return new OneEpisodeHolder(inflater.inflate(R.layout.ep_view, parent, false));
+            case "FAV_EPISODE":
+                return new FavEpisodeHolder(inflater.inflate(R.layout.fav_ep_item, parent, false));
             default:
                 return null;
         }
@@ -99,7 +95,6 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Resources resources = context.getResources();
         switch (adapterType) {
             case "ALL_CHARACTERS":
                 AllCharactersHolder ACH = (AllCharactersHolder) holder;
@@ -108,7 +103,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     ACH.charname.setText(charsIndi.getString("name"));
                     ACH.chargender.setText(charsIndi.getString("gender"));
                     ACH.charstatus.setText(charsIndi.getString("status"));
-                    ACH.charspecies.setText(String.format(resources.getString(R.string.charSpecies_placeholder), charsIndi.getString("species"), charsIndi.getString("type")));
+                    ACH.charspecies.setText(String.format(context.getResources().getString(R.string.charSpecies_placeholder), charsIndi.getString("species"), charsIndi.getString("type")));
                     ACH.charorigin.setText(charsIndi.getJSONObject("origin").getString("name"));
                     ACH.charlastknown.setText(charsIndi.getJSONObject("location").getString("name"));
 
@@ -173,7 +168,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 AEH.episodeNum.setLayoutManager(new LinearLayoutManager(context));
                 Animation arrowAnimShow = AnimationUtils.loadAnimation(context, R.anim.dropdown_arrow);
                 Animation arrowAnimCollapse = AnimationUtils.loadAnimation(context, R.anim.drppdown_arrow_collapse);
-                AEH.dropdown.setOnClickListener(v -> {
+                AEH.itemView.setOnClickListener(v -> {
                     if (AEH.episodeNum.getVisibility() == View.GONE) {
                         AEH.dropdown.startAnimation(arrowAnimShow);
                         AEH.episodeNum.setVisibility(View.VISIBLE);
@@ -201,13 +196,11 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         residentURL = data.getString(position);
                     if (characters.size() > 0)
                         residentURL = characters.get(position);
-//                    Log.d(TAG, "onBindViewHolder: called" + residentURL);
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, residentURL,
                             response -> {
                                 try {
                                     charsIndi = new JSONObject(response);
                                     imgURL = charsIndi.getString("image");
-                                    Log.d(TAG, "onBindViewHolder: called" + imgURL);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     Log.d(TAG, "onResponse: " + e.getMessage());
@@ -224,24 +217,50 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     requestQueue.add(stringRequest);
 
                     ARH.itemView.setOnClickListener(view -> {
-                        LocationInfoDirections.ActionLocationInfoToCharacterFragment action = LocationInfoDirections.actionLocationInfoToCharacterFragment();
-                        try {
-                            action.setName(charsIndi.getString("name"));
-                            action.setGender(charsIndi.getString("gender"));
-                            action.setSpecies(charsIndi.getString("species"));
-                            action.setStatus(charsIndi.getString("status"));
-                            action.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
-                            action.setLocation(charsIndi.getJSONObject("location").getString("name"));
-                            action.setImage(charsIndi.getString("image"));
-                            Navigation.findNavController(view).navigate(action);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        LocationInfoDirections.ActionLocationInfoToCharacterFragment action = null;
+                        EpisodeFragmentDirections.ActionEpisodeFragmentToCharacterFragment action1 = null;
+                        if (data != null) {
+                            action = LocationInfoDirections.actionLocationInfoToCharacterFragment();
+                            try {
+                                action.setName(charsIndi.getString("name"));
+                                action.setGender(charsIndi.getString("gender"));
+                                action.setSpecies(charsIndi.getString("species"));
+                                action.setStatus(charsIndi.getString("status"));
+                                action.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
+                                action.setLocation(charsIndi.getJSONObject("location").getString("name"));
+                                action.setImage(charsIndi.getString("image"));
+                                Navigation.findNavController(view).navigate(action);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            action1 = EpisodeFragmentDirections.actionEpisodeFragmentToCharacterFragment();
+                            try {
+                                action1.setName(charsIndi.getString("name"));
+                                action1.setGender(charsIndi.getString("gender"));
+                                action1.setSpecies(charsIndi.getString("species"));
+                                action1.setStatus(charsIndi.getString("status"));
+                                action1.setOrigin(charsIndi.getJSONObject("origin").getString("name"));
+                                action1.setLocation(charsIndi.getJSONObject("location").getString("name"));
+                                action1.setImage(charsIndi.getString("image"));
+                                Navigation.findNavController(view).navigate(action1);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
+            case "FAV_EPISODE":
+                FavEpisodeHolder FEH = (FavEpisodeHolder) holder;
+                FEH.name.setText(episodes.get(position).getName());
+                FEH.episode.setText(episodes.get(position).getEpisode());
+                FEH.itemView.setOnClickListener(v -> {
+                    FavouriteEpisodesFragmentDirections.ActionFavouriteEpisodesFragmentToEpisodeFragment action = FavouriteEpisodesFragmentDirections.actionFavouriteEpisodesFragmentToEpisodeFragment(episodes.get(position));
+                    Navigation.findNavController(v).navigate(action);
+                });
         }
     }
 
@@ -315,6 +334,19 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public OneEpisodeHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.episode_name);
+        }
+    }
+
+    public static class FavEpisodeHolder extends RecyclerView.ViewHolder {
+
+        TextView name;
+        TextView episode;
+
+
+        public FavEpisodeHolder(@NonNull @NotNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.fav_ep_name);
+            episode = itemView.findViewById(R.id.fav_ep_no);
         }
     }
 }

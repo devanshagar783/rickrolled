@@ -22,7 +22,7 @@
         <item android:id="@+id/watching"
             android:title="Watching"/>
     
-        <item android:id="@+id/favourite"
+        <item android:id="@id/favouriteEpisodesFragment"
             android:title="Favourites"/>
     
         <item android:id="@+id/logout"

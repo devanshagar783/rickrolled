@@ -61,7 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
         getjson();
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.infoFragment, R.id.familyTreeFragment, R.id.allCharactersFragment, R.id.allLocationsFragment, R.id.allEpisodesFragment)
+                R.id.infoFragment,
+                R.id.familyTreeFragment,
+                R.id.allCharactersFragment,
+                R.id.allLocationsFragment,
+                R.id.allEpisodesFragment,
+                R.id.favouriteEpisodesFragment)
                 .setDrawerLayout(drawerLayout)
                 .build();
         navController = Navigation.findNavController(this, R.id.fragment);
