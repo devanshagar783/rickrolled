@@ -19,7 +19,7 @@
         <item android:id="@id/allEpisodesFragment"
             android:title="All Episodes"/>
 
-        <item android:id="@+id/watching"
+        <item android:id="@id/watchlistFragment"
             android:title="Watching"/>
     
         <item android:id="@id/favouriteEpisodesFragment"

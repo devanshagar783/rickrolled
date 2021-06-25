@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.allCharactersFragment,
                 R.id.allLocationsFragment,
                 R.id.allEpisodesFragment,
+                R.id.watchlistFragment,
                 R.id.favouriteEpisodesFragment)
                 .setDrawerLayout(drawerLayout)
                 .build();
