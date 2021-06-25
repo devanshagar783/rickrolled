@@ -161,4 +161,10 @@
             app:destination = "@id/episodeFragment"
             />
     </fragment>
+    <fragment
+        android:id = "@+id/watchlistFragment"
+        android:name = "com.example.rickrolled.WatchlistFragment"
+        android:label = "Watchlist"
+        tools:layout = "@layout/fragment_watchlist"
+        />
 </navigation>
